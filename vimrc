@@ -377,6 +377,9 @@ map <leader>q :e ~/buffer<cr>
 " Quickly open a markdown buffer for scribble
 map <leader>x :e ~/buffer.md<cr>
 
+"Use unnamed clipboard to paste and copy directly 
+set clipboard=unnamed
+
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
