@@ -366,6 +366,26 @@ map <leader>s? z=
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Markdown
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:markdown_cmd = "pandoc -o " 
+let g:start_cmd = "open" "for mac osx use open
+if has("win32")
+    let g:start_cmd = "start"
+elseif has("unix")
+    let g:start_cmd = "sensible-browser"
+endif
+
+function! MarkdownPreview()
+    let l:preview_file = tempname() . ".html" 
+    execute "w"
+    execute "silent !" . g:markdown_cmd . " " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file  
+endfunction
+
+map <leader>mc :call MarkdownPreview()<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
