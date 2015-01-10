@@ -305,12 +305,12 @@ nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
+"if has("mac") || has("macunix")
+"  nmap <D-j> <M-j>
+"  nmap <D-k> <M-k>
+"  vmap <D-j> <M-j>
+"  vmap <D-k> <M-k>
+"endif
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -370,16 +370,20 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:markdown_cmd = "pandoc -o " 
 let g:start_cmd = "open" "for mac osx use open
-if has("win32")
+if has("win32") || has("win16")
     let g:start_cmd = "start"
 elseif has("unix")
-    let g:start_cmd = "sensible-browser"
+    let s:os = substitute(system('uname'), "\n", "", "")
+    if s:os!= "Darwin"
+        "for linux use sesible-browser
+        let g:start_cmd = "sensible-browser"
+    endif
 endif
 
 function! MarkdownPreview()
     let l:preview_file = tempname() . ".html" 
     execute "w"
-    execute "silent !" . g:markdown_cmd . " " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file  
+    execute "!" . g:markdown_cmd . " " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file  
 endfunction
 
 map <leader>mc :call MarkdownPreview()<CR>
