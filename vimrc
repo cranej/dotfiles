@@ -388,6 +388,12 @@ endfunction
 
 map <leader>mc :call MarkdownPreview()<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Chinese Input method issue 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set noimdisable
+autocmd! InsertLeave * set imdisable
+autocmd! InsertEnter * set noimdisable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
