@@ -7,17 +7,25 @@ function get-pwd-short {
 
 function prompt
 {
-
+    $l = "$(Get-Location)".Split("\")
+    $title = "$(Get-Location)"
+    if($l.Length -gt 2){
+        $title = [String]::Join("\", $l[($l.Length-2)..$l.Length])
+    }
     # Set Window Title
-    $host.UI.RawUI.WindowTitle = "$ENV:USERNAME@$ENV:COMPUTERNAME - $(Get-Location)"
+    $host.UI.RawUI.WindowTitle = "$title"
     #$host.UI.RawUI.WindowTitle = "Files: " + (get-childitem).count + " Process: " + (get-process).count
+    
+    # location stack
+    $locStack = New-Object string ([char] '+'), (Get-Location -Stack).Count
 
     # Set Prompt
     #Write-Host (Get-Date -Format G) -NoNewline -ForegroundColor Red
     #Write-Host " :: " -NoNewline -ForegroundColor DarkGray
     Write-Host "$ENV:USERNAME@$ENV:COMPUTERNAME" -NoNewline -ForegroundColor Yellow
     Write-Host " :: " -NoNewline -ForegroundColor DarkGray
-    Write-Host $(get-pwd-short) -ForegroundColor Green
+    Write-Host $(get-pwd-short) -NoNewLine -ForegroundColor Green
+    Write-Host " $locStack" -ForegroundColor DarkGray 
 
     # Check for Administrator elevation
     $wid=[System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -99,3 +107,6 @@ set-alias restart invoke-systemReboot
 if (test-path alias:\sleep) { remove-item alias:\sleep -force }
 set-alias sleep invoke-systemSleep -force
 set-alias lock invoke-terminalLock
+
+#use gnudiff
+if (test-path alias:\diff) { remove-item alias:\diff -force }

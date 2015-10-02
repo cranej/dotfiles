@@ -1,30 +1,10 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-"       Amir Salihefendic
-"       http://amix.dk - amix@amix.dk
-"
-" Version: 
-"       5.0 - 29/05/12 15:43:36
-"
-" Blog_post: 
-"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
-"
-" Raw_version: 
-"       http://amix.dk/vim/vimrc.txt
+" My vimrc file, customized based on Amir Salihefendic (http://amix.dk - amix@amix.dk)'s basic version: https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim.
 "
 " Sections:
 "    -> General
 "    -> VIM user interface
+"    -> Windows specified stuff
 "    -> Colors and Fonts
 "    -> Files and backups
 "    -> Text, tab and indent related
@@ -32,13 +12,13 @@
 "    -> Moving around, tabs and buffers
 "    -> Status line
 "    -> Editing mappings
-"    -> vimgrep searching and cope displaying
 "    -> Spell checking
+"    -> Markdown
+"    -> Chinese Input method issue
 "    -> Misc
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -67,6 +47,29 @@ nmap <leader>w :w!<cr>
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Windows specified stuff 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :Psh launch powershell, :Psh args run args in powershell
+if has("win32") || has("win16")
+    function! RunPowershell(...)
+        let l:argLength = len(a:000)
+        if l:argLength == 0
+            execute "!powershell"
+        else
+            let psargs = join(a:000," ")
+            execute "!powershell -Command ".psargs
+        endif
+    endfunction
+    command! -nargs=* Psh :call RunPowershell(<f-args>)
+    
+    " :Fsi start a fsharp interective console, and load current file into it
+    command! -nargs=0 Fsi !fsi --load:% 
+    
+    " make binaries from ~/vimfiles/bin take preference
+    let $PATH=expand("~")."/vimfiles/bin;".$PATH
+    set grepprg=grep.exe\ -niH
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -143,7 +146,7 @@ set tm=500
 
 " Add a bit extra margin to the left
 set foldcolumn=1
-
+set nofoldenable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -161,9 +164,22 @@ set background=dark
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
+    set guioptions+=c
     set guioptions-=e
+    set guioptions-=m
+    set guioptions-=r
+    set guioptions-=L
+    set guicursor=a:blinkon700
     set t_Co=256
     set guitablabel=%M\ %t
+    " make the gvim window as big as possible
+    set lines=999
+    set columns=999
+    if has("mac") || has("maxunix")
+        set guifont=Monaco:h12
+      elseif has("win32") || has("win16")
+        set guifont=Consolas:h11,Courier\ New:h10
+    endif
     try
         colorscheme desert 
     catch
@@ -269,7 +285,7 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers 
 try
-  set switchbuf=useopen,usetab,newtab
+  set switchbuf=useopen,usetab
   set stal=2
 catch
 endtry
@@ -290,7 +306,7 @@ endtry
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %Y\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -321,37 +337,6 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ack searching and cope displaying
-"    requires ack.vim - it's much better than vimgrep/grep
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" When you press gv you Ack after the selected text
-"vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
-
-" Open Ack and put the cursor in the right position
-"map <leader>g :Ack 
-
-" When you press <leader>r you can search and replace the selected text
-"vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
-
-" Do :help cope if you are unsure what cope is. It's super useful!
-"
-" When you search with Ack, display your results in cope by doing:
-"   <leader>cc
-"
-" To go to the next search result do:
-"   <leader>n
-"
-" To go to the previous search results do:
-"   <leader>p
-"
-"map <leader>cc :botright cope<cr>
-"map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-"map <leader>n :cn<cr>
-"map <leader>p :cp<cr>
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -364,11 +349,12 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Markdown
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:markdown_cmd = "pandoc -o " 
+au BufRead,BufNewFile *.md  set filetype=markdown
+au BufRead,BufNewFile *.markdown  set filetype=markdown
+let g:markdown_cmd = "pandoc" 
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
     let g:start_cmd = "start"
@@ -383,10 +369,31 @@ endif
 function! MarkdownPreview()
     let l:preview_file = tempname() . ".html" 
     execute "w"
-    execute "!" . g:markdown_cmd . " " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file  
+    execute "!" . g:markdown_cmd . " -o " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file
+    redraw
 endfunction
 
-map <leader>mc :call MarkdownPreview()<CR>
+function! ConvertMarkdown(...)
+    let l:cwd = getcwd()
+    let l:to = "html"
+    let l:from = "markdown_github-hard_line_breaks+pandoc_title_block"
+    let l:folder = expand("%:p:h") . "/generated"
+    if a:0 > 0
+        let l:to = a:1
+    endif
+    if a:0 > 1
+        let l:folder = a:2
+    endif
+    let l:output = l:folder . "/" . expand("%:t:r") . "." . l:to
+    execute "silent w"
+    :lcd %:p:h
+    execute "!" . g:markdown_cmd . " -t " . l:to . " -f " . l:from . " -o " . l:output . " " . expand("%")
+    redraw
+    execute "cd " . l:cwd
+endfunction
+
+command! -nargs=* ConvertMd :call ConvertMarkdown(<f-args>)
+map <leader>mp :call MarkdownPreview()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Chinese Input method issue 
@@ -413,13 +420,15 @@ set clipboard=unnamed
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
+"Grep
+command! -nargs=+ -complete=file Grep :silent grep! <args> | copen
+command! -nargs=+ -complete=file GrepNoise :grep! <args> | copen
 
 "Encoding
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1  
 set fileencoding=utf-8  
 set encoding=utf-8  
 set termencoding=utf-8  
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
