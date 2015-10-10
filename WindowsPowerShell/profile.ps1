@@ -67,9 +67,6 @@ $env:VISUAL = $env:EDITOR
 $env:GIT_EDITOR = $env:EDITOR
 
 # Some helpers for working with the filesystem
-function remove-allChildItems([string] $glob) { remove-item -recurse -force $glob }
-function get-childfiles { get-childitem | ? { -not $_.PsIsContainer } }
-function get-childcontainers { get-childitem | ? { $_.PsIsContainer } }
 function get-command-path([string] $cmd) {
     get-command $cmd | % {
         if($_.CommandType -eq "Alias") { 
@@ -82,31 +79,18 @@ function get-command-path([string] $cmd) {
     } 
 }
 
-set-alias count measure-object
-set-alias lsd get-childcontainers
-set-alias lsf get-childfiles
-set-alias rmd remove-allChildItems
 if (test-path alias:\set) { remove-item alias:\set -force }
 set-alias set set-variableEx -force
-set-alias sudo elevate 
 set-alias unset remove-variable
-#set-alias whence get-commandInfoEx
+
+#sudo
+set-alias sudo elevate 
+#which
 set-alias which get-command-path
 
-# Helper functions for user/computer session management
-function invoke-userLogout { shutdown /l /t 0 }
-function invoke-systemShutdown { shutdown /s /t 5 }
-function invoke-systemReboot { shutdown /r /t 5 }
-function invoke-systemSleep { RunDll32.exe PowrProf.dll,SetSuspendState }
-function invoke-terminalLock { RunDll32.exe User32.dll,LockWorkStation }
-
-# Aliases
-set-alias logout invoke-userLogout
-set-alias halt invoke-systemShutdown
-set-alias restart invoke-systemReboot
-if (test-path alias:\sleep) { remove-item alias:\sleep -force }
-set-alias sleep invoke-systemSleep -force
-set-alias lock invoke-terminalLock
+#rbserver local http server
+function rb-server { ruby -run -e httpd . -p 8000 $args}
+set-alias rbserver rb-server 
 
 #use gnudiff
 if (test-path alias:\diff) { remove-item alias:\diff -force }
