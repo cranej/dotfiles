@@ -1,0 +1,10 @@
+[gpg]
+	program = gpg2
+[core]
+	autocrlf = true
+[user]
+	signingKey = F8C4BF46
+	name = Crane Jin
+	email = crane@cranejin.com
+[format]
+	pretty = format:%C(yellow)%h %Cgreen%G? %<(10,ltrunc)%GK%n%aN <%ae>%n%aD%n%n  %s%n
