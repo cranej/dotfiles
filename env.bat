@@ -1,3 +1,5 @@
 @echo off
-SET PATH=%USERPROFILE%\vimfiles\bin;%PATH%
-SET PROMPT=[%COMPUTERNAME%] $p$S$+$_$g$S
+SET PATH=%USERPROFILE%\vimfiles\bin;%USERPROFILE%\bin;%PATH%
+SET MYPROMPT=[%COMPUTERNAME%] $p$S$+$_$g$S
+SET PROMPT=%MYPROMPT%
+TITLE I'm a shell ^^_^^
