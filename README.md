@@ -24,3 +24,9 @@ Developer Command Prompt for Visual Studio 2015.  Put it in path and run 'vsshel
 `sudo` for Windows Command Prompt. Run it without parameter to show help. 
 
 You can compile it from [Source](https://github.com/cranej/elevate) after review it in detail if you don't trust me. 
+
+#paste.exe#
+Reads text from clipboard and writes to standard output. Compiled from one lien C# code `Console.Write(Clipboard.GetText());`.
+
+#Command Prompt.link#
+Command Prompt shortcut which loads `%userprofile%\bin\env.bat` at start. Thus you need to copy \*.bat to `%userprofile%\bin\` before everything works. 
