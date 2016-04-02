@@ -1,7 +1,11 @@
 [gpg]
 	program = gpg2
+[commit]
+    gpgsign = true
 [core]
 	autocrlf = true
+    editor = vim
+    fscache = true
 [user]
 	signingKey = F8C4BF46
 	name = Crane Jin
