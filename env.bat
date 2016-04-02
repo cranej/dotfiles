@@ -19,16 +19,20 @@ IF NOT "%VS110COMNTOOLS%"=="" (
 :includevs14
     SET VSPATH="%VS140COMNTOOLS:~0,-6%IDE\"
     SET PATH=%VSPATH%;%PATH% 
+rem subroutine does not return at :end, you have to GOTO EOF
+    GOTO :EOF
 :end
 
 :includevs12
     SET VSPATH="%VS120COMNTOOLS:~0,-6%IDE\"
     SET PATH=%VSPATH%;%PATH% 
+    GOTO :EOF
 :end
 
 :includevs11
     SET VSPATH="%VS110COMNTOOLS:~0,-6%IDE\"
     SET PATH=%VSPATH%;%PATH% 
+    GOTO :EOF
 :end
 
 :NEXT
