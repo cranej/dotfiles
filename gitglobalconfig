@@ -3,7 +3,7 @@
 [commit]
     gpgsign = true
 [core]
-	autocrlf = true
+	autocrlf = false 
     editor = vim
     fscache = true
 [user]
