@@ -20,6 +20,29 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'Shougo/vimproc'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+call vundle#end()
+
+filetype plugin indent on
+
+noremap <C-t> :NERDTreeToggle<CR><CR>
+let NERDTreeIgnore=[
+    \ ".*\\.class$",
+    \ ".*\\.o$",
+    \ ".*\\.hi$",
+    \ ".*\\.cmi$",
+    \ ".*\\.cmx$",
+    \ ".*\\.exe$",
+    \ ]
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -27,10 +50,6 @@ set encoding=utf-8
 set nocompatible
 " Sets how many lines of history VIM has to remember
 set history=700
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -43,12 +62,12 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Windows specified stuff 
+" => Windows specified stuff
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :Psh launch powershell, :Psh args run args in powershell
 if has("win32") || has("win16")
@@ -62,10 +81,10 @@ if has("win32") || has("win16")
         endif
     endfunction
     command! -nargs=* Psh :call RunPowershell(<f-args>)
-    
+
     " :Fsi start a fsharp interective console, and load current file into it
-    command! -nargs=0 Fsi !fsi --load:% 
-    
+    command! -nargs=0 Fsi !fsi --load:%
+
     " make binaries from ~/vimfiles/bin take preference
     let $PATH=expand("~")."/vimfiles/bin;".$PATH
     set grepprg=grep.exe\ -niH
@@ -78,7 +97,7 @@ endif
 set so=7
 
 " Avoid garbled characters in Chinese language windows OS
-let $LANG='en' 
+let $LANG='en'
 set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
@@ -98,7 +117,7 @@ endif
 set ruler
 
 "Always show line number
-set number 
+set number
 
 " Height of the command bar
 set cmdheight=2
@@ -118,23 +137,23 @@ endif
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -152,10 +171,10 @@ set nofoldenable
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
+syntax enable
 
 try
-    colorscheme darkblue 
+    colorscheme darkblue
 catch
 endtry
 
@@ -181,7 +200,7 @@ if has("gui_running")
         set guifont=Consolas:h11,Courier\ New:h10
     endif
     try
-        colorscheme desert 
+        colorscheme desert
     catch
     endtry
 endif
@@ -201,8 +220,8 @@ set nobackup
 set nowb
 set noswapfile
 
-"Turn off viminfo and persistent undo file for security reason 
-set noundofile 
+"Turn off viminfo and persistent undo file for security reason
+set noundofile
 set viminfo=
 
 
@@ -267,8 +286,8 @@ map <leader>ba :1,1000 bd!<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
+map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -283,7 +302,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab
   set stal=2
@@ -354,7 +373,7 @@ map <leader>s= z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufRead,BufNewFile *.md  set filetype=markdown
 au BufRead,BufNewFile *.markdown  set filetype=markdown
-let g:markdown_cmd = "pandoc" 
+let g:markdown_cmd = "pandoc"
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
     let g:start_cmd = "start"
@@ -367,7 +386,7 @@ elseif has("unix")
 endif
 
 function! MarkdownPreview()
-    let l:preview_file = tempname() . ".html" 
+    let l:preview_file = tempname() . ".html"
     execute "w"
     execute "!" . g:markdown_cmd . " -o " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file
     redraw
@@ -396,7 +415,7 @@ command! -nargs=* ConvertMd :call ConvertMarkdown(<f-args>)
 map <leader>mp :call MarkdownPreview()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Chinese Input method issue 
+" => Chinese Input method issue
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set noimdisable
 autocmd! InsertLeave * set imdisable
@@ -414,7 +433,7 @@ map <leader>q :e ~/buffer<cr>
 " Quickly open a markdown buffer for scribble
 map <leader>x :e ~/buffer.md<cr>
 
-"Use unnamed clipboard to paste and copy directly 
+"Use unnamed clipboard to paste and copy directly
 set clipboard=unnamed
 
 " Toggle paste mode on and off
@@ -425,10 +444,10 @@ command! -nargs=+ -complete=file Grep :silent grep! <args> | copen
 command! -nargs=+ -complete=file GrepNoise :grep! <args> | copen
 
 "Encoding
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1  
-set fileencoding=utf-8  
-set encoding=utf-8  
-set termencoding=utf-8  
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencoding=utf-8
+set encoding=utf-8
+set termencoding=utf-8
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -437,7 +456,7 @@ function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
-endfunction 
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
