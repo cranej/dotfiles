@@ -38,7 +38,7 @@ Plugin 'qpkorr/vim-renamer'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'plasticboy/vim-markdown'
 call vundle#end()
 
 filetype plugin indent on
@@ -57,7 +57,7 @@ let NERDTreeIgnore=[
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-
+let g:vim_markdown_frontmatter = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -297,7 +297,7 @@ map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-map <leader>t<leader> :tabnext<CR>
+map <leader>tb :tabnext<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
