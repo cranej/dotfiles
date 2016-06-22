@@ -2,6 +2,7 @@
 " My vimrc file, customized based on Amir Salihefendic (http://amix.dk - amix@amix.dk)'s basic version: https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim.
 "
 " Sections:
+"    -> Vundle Plugins
 "    -> General
 "    -> VIM user interface
 "    -> Windows specified stuff
@@ -20,6 +21,9 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Vundle Plugins 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -29,6 +33,7 @@ Plugin 'Shougo/vimproc'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 call vundle#end()
 
 filetype plugin indent on
@@ -508,3 +513,12 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+"Copy all matches after a search - Super useful!
+function! CopyMatches(reg)
+  let hits = []
+  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/ge
+  let reg = empty(a:reg) ? '+' : a:reg
+  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
+endfunction
+command! -register CopyMatches call CopyMatches(<q-reg>)
