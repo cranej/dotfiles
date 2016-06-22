@@ -53,6 +53,11 @@ let NERDTreeIgnore=[
     \ ".*\\.exe$",
     \ ]
 
+"open NERDTree if no file specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -292,7 +297,7 @@ map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
+map <leader>t<leader> :tabnext<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -410,7 +415,7 @@ autocmd BufRead,BufNewFile *.lhs call HaskellHook()
 autocmd BufRead,BufNewFile *.hsc set filetype=haskell
 autocmd BufRead,BufNewFile *.purs set filetype=haskell
 function HaskellHook()
-    noremap <C-i> :!ghci -Wall '%'<CR>
+    noremap <C-i> :!ghci -Wall "%:p"<CR>
     noremap <C-c> :%!stylish-haskell<CR>
     setlocal makeprg=stack\ build
 endfunction
