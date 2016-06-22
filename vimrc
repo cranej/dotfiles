@@ -15,6 +15,8 @@
 "    -> Editing mappings
 "    -> Spell checking
 "    -> Markdown
+"    -> Haskell
+"    -> Javascript
 "    -> Chinese Input method issue
 "    -> Misc
 "    -> Helper functions
@@ -30,6 +32,9 @@ call vundle#begin()
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Shougo/vimproc'
+Plugin 'Align'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'qpkorr/vim-renamer'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -91,7 +96,7 @@ if has("win32") || has("win16")
     command! -nargs=0 Fsi !fsi --load:%
 
     " make binaries from ~/vimfiles/bin take preference
-    let $PATH=expand("~")."/vimfiles/bin;".$PATH
+    let $PATH=expand("~")."/bin/gnubin;".$PATH
     set grepprg=grep.exe\ -niH
 endif
 
@@ -177,11 +182,6 @@ set nofoldenable
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
-
-try
-    colorscheme darkblue
-catch
-endtry
 
 set background=dark
 
@@ -314,15 +314,6 @@ try
 catch
 endtry
 
-" Return to last edit position when opening files (You want this!)
-"autocmd BufReadPost *
-"     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-"     \   exe "normal! g`\"" |
-"     \ endif
-" Remember info about open buffers on close
-"set viminfo^=%
-
-
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -344,13 +335,6 @@ nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-"if has("mac") || has("macunix")
-"  nmap <D-j> <M-j>
-"  nmap <D-k> <M-k>
-"  vmap <D-j> <M-j>
-"  vmap <D-k> <M-k>
-"endif
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -418,6 +402,23 @@ endfunction
 
 command! -nargs=* ConvertMd :call ConvertMarkdown(<f-args>)
 map <leader>mp :call MarkdownPreview()<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Haskell 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType haskell call HaskellHook()
+autocmd BufRead,BufNewFile *.lhs call HaskellHook()
+autocmd BufRead,BufNewFile *.hsc set filetype=haskell
+autocmd BufRead,BufNewFile *.purs set filetype=haskell
+function HaskellHook()
+    noremap <C-i> :!ghci -Wall '%'<CR>
+    noremap <C-c> :%!stylish-haskell<CR>
+    setlocal makeprg=stack\ build
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Javascript 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufRead,BufNewFile *.json set filetype=javascript
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Chinese Input method issue

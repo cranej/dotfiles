@@ -1,5 +1,5 @@
 @echo off
-SET PATH=%USERPROFILE%\vimfiles\bin;%USERPROFILE%\bin;%PATH%
+SET PATH=%USERPROFILE%\bin\gnubin;%USERPROFILE%\bin;%PATH%
 
 IF NOT "%VS140COMNTOOLS%"=="" (
     call :includevs14
