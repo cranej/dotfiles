@@ -1,16 +1,19 @@
 [gpg]
-	program = gpg2
+	  program = gpg2
 [commit]
     gpgsign = true
 [core]
-	autocrlf = false 
+	  autocrlf = false
     editor = vim
     fscache = true
+[alias]
+		unstage = reset HEAD --
+		last = !git --no-pager log -1 HEAD
 [user]
-	signingKey = F8C4BF46
-	name = Crane Jin
-	email = crane@cranejin.com
+	  signingKey = F8C4BF46
+	  name = Crane Jin
+	  email = crane@cranejin.com
 [format]
-	pretty = format:%C(yellow)%h %Cgreen%G? %<(10,ltrunc)%GK%n%aN <%ae>%n%aD%n%n  %s%n
+	  pretty = format:%C(yellow)%h %Cgreen%G? %<(10,ltrunc)%GK%n%aN <%ae>%n%aD%n%n  %s%n
 [push]
-	default = simple
+	  default = simple
