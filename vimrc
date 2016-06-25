@@ -19,6 +19,7 @@
 "    -> Javascript
 "    -> Chinese Input method issue
 "    -> Misc
+"    -> Abbrevations
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -69,13 +70,18 @@ set history=700
 " Set to auto read when a file is changed from the outside
 set autoread
 
+" no modeline
+set nomodeline
+
+set splitbelow
+set splitright
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
 let g:mapleader = ","
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nnoremap <leader>w :w!<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
@@ -270,47 +276,47 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
+noremap j gj
+noremap k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+noremap <space> /
+noremap <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+noremap <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+noremap <leader>bd :Bclose<cr>
 
 " Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
+noremap <leader>ba :1,1000 bd!<cr>
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>tb :tabnext<CR>
+noremap <leader>tn :tabnew<cr>
+noremap <leader>to :tabonly<cr>
+noremap <leader>tc :tabclose<cr>
+noremap <leader>tm :tabmove
+noremap <leader>tb :tabnext<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+nnoremap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+noremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers
 try
@@ -333,13 +339,13 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %Y\ \ CWD:\ %r%{getcwd()}%h\ \ \ Lin
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remap VIM 0 to first non-blank character
-map 0 ^
+noremap 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nnoremap <M-j> mz:m+<cr>`z
+nnoremap <M-k> mz:m-2<cr>`z
+vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -350,17 +356,26 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
+" quit window
+nnoremap K :q<cr>
+nnoremap M K
+"save
+nnoremap s :w<cr>
+
+" Substitute
+nnoremap ss :%s/
+vnoremap ss :s/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+noremap <leader>ss :setlocal spell!<cr>
 
 " Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s= z=
+noremap <leader>sn ]s
+noremap <leader>sp [s
+noremap <leader>sa zg
+noremap <leader>s= z=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Markdown
@@ -406,12 +421,13 @@ function! ConvertMarkdown(...)
 endfunction
 
 command! -nargs=* ConvertMd :call ConvertMarkdown(<f-args>)
-map <leader>mp :call MarkdownPreview()<CR>
+noremap <leader>mp :call MarkdownPreview()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Haskell 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType haskell call HaskellHook()
 autocmd BufRead,BufNewFile *.lhs call HaskellHook()
+autocmd BufRead,BufNewFile *.hs set filetype=haskell
 autocmd BufRead,BufNewFile *.hsc set filetype=haskell
 autocmd BufRead,BufNewFile *.purs set filetype=haskell
 function HaskellHook()
@@ -439,16 +455,16 @@ autocmd! InsertEnter * set noimdisable
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
+noremap <leader>q :e ~/buffer<cr>
 
 " Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
+noremap <leader>x :e ~/buffer.md<cr>
 
 "Use unnamed clipboard to paste and copy directly
 set clipboard=unnamed
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+noremap <leader>pp :setlocal paste!<cr>
 
 "Grep
 command! -nargs=+ -complete=file Grep :silent grep! <args> | copen
@@ -459,6 +475,12 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set fileencoding=utf-8
 set encoding=utf-8
 set termencoding=utf-8
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Abbrevations 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+iabbrev cj@ crane@cranejin.com
+iabbrev cjo@ crane.jin@outlook.com
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
