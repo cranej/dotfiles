@@ -476,6 +476,9 @@ set fileencoding=utf-8
 set encoding=utf-8
 set termencoding=utf-8
 
+"Invisible chars
+set listchars=tab:▸\ ,eol:¬
+nnoremap <leader>l :set list!<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Abbrevations 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
