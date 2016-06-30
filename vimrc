@@ -59,6 +59,9 @@ let NERDTreeIgnore=[
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+"fugitive
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
 let g:vim_markdown_frontmatter = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -333,7 +336,7 @@ endtry
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %Y\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %Y\ \ CWD:\ %r%{getcwd()}%h\ %{fugitive#statusline()}\ \ \ Line:\ %l
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
