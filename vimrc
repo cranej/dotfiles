@@ -40,6 +40,7 @@ Plugin 'qpkorr/vim-renamer'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-fugitive'
 call vundle#end()
 
 filetype plugin indent on
