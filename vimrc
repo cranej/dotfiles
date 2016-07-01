@@ -34,6 +34,7 @@ let NERDTreeIgnore=[
 "fugitive
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+"vim-markdown YAML support
 let g:vim_markdown_frontmatter = 1
 "}}}
 " => General {{{
@@ -65,6 +66,9 @@ nnoremap <leader>w :w!<cr>
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
+" Delete to hole
+nnoremap D "_d
+vnoremap D "_d
 "}}}
 " => Windows specified stuff {{{
 
@@ -290,7 +294,7 @@ au TabLeave * let g:lasttab = tabpagenr()
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr><cr>
 
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -309,7 +313,7 @@ endtry
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %Y\ \ CWD:\ %r%{getcwd()}%h\ %{fugitive#statusline()}\ \ \ Line:\ %l
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ %{fugitive#statusline()}\ %Y\ \ CWD:\ %{getcwd()}%14.(%l,%c%V%)\ \ %P
 
 
 " }}}
