@@ -1,32 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" My vimrc file, customized based on Amir Salihefendic (http://amix.dk - amix@amix.dk)'s basic version: https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim.
-"
-" Sections:
-"    -> Vundle Plugins
-"    -> General
-"    -> VIM user interface
-"    -> Windows specified stuff
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> Spell checking
-"    -> Markdown
-"    -> Haskell
-"    -> Javascript
-"    -> Chinese Input method issue
-"    -> Misc
-"    -> Abbrevations
-"    -> Helper functions
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vundle Plugins 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin {{{
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -56,16 +28,18 @@ let NERDTreeIgnore=[
     \ ]
 
 "open NERDTree if no file specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 "fugitive
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
 let g:vim_markdown_frontmatter = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"}}}
+" => General {{{
+
+autocmd BufReadPost *vimrc setlocal foldmethod=marker 
+
 set encoding=utf-8
 set nocompatible
 " Sets how many lines of history VIM has to remember
@@ -91,9 +65,9 @@ nnoremap <leader>w :w!<cr>
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Windows specified stuff
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"}}}
+" => Windows specified stuff {{{
+
 " :Psh launch powershell, :Psh args run args in powershell
 if has("win32") || has("win16")
     function! RunPowershell(...)
@@ -115,9 +89,9 @@ if has("win32") || has("win16")
     set grepprg=grep.exe\ -niH
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => VIM user interface {{{
+
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -191,10 +165,9 @@ set tm=500
 " Add a bit extra margin to the left
 set foldcolumn=1
 set nofoldenable
+" }}}
+" => Colors and Fonts {{{
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
 
@@ -232,9 +205,9 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Files, backups and undo {{{
+
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
@@ -245,9 +218,9 @@ set noundofile
 set viminfo=
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Text, tab and indent related {{{
+
 " Use spaces instead of tabs
 set expandtab
 
@@ -267,18 +240,18 @@ set si "Smart indent
 set wrap "Wrap lines
 
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
+" }}}
+" => Visual mode related {{{
+
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :call VisualSelection('f', '')<CR>
 vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Moving around, tabs, windows and buffers {{{
+
 " Treat long lines as break lines (useful when moving around in them)
 noremap j gj
 noremap k gk
@@ -329,9 +302,9 @@ try
 catch
 endtry
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
+" }}}
+" => Status line {{{
+
 " Always show the status line
 set laststatus=2
 
@@ -339,9 +312,9 @@ set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ %Y\ \ CWD:\ %r%{getcwd()}%h\ %{fugitive#statusline()}\ \ \ Line:\ %l
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Editing mappings {{{
+
 " Remap VIM 0 to first non-blank character
 noremap 0 ^
 
@@ -369,9 +342,9 @@ nnoremap s :w<cr>
 " Substitute
 nnoremap ss :%s/
 vnoremap ss :s/
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Spell checking {{{
+
 " Pressing ,ss will toggle and untoggle spell checking
 noremap <leader>ss :setlocal spell!<cr>
 
@@ -381,9 +354,8 @@ noremap <leader>sp [s
 noremap <leader>sa zg
 noremap <leader>s= z=
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Markdown
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Markdown {{{
 au BufRead,BufNewFile *.md  set filetype=markdown
 au BufRead,BufNewFile *.markdown  set filetype=markdown
 let g:markdown_cmd = "pandoc"
@@ -426,9 +398,8 @@ endfunction
 
 command! -nargs=* ConvertMd :call ConvertMarkdown(<f-args>)
 noremap <leader>mp :call MarkdownPreview()<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Haskell 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Haskell  {{{
 autocmd FileType haskell call HaskellHook()
 autocmd BufRead,BufNewFile *.lhs call HaskellHook()
 autocmd BufRead,BufNewFile *.hs set filetype=haskell
@@ -440,21 +411,19 @@ function HaskellHook()
     setlocal makeprg=stack\ build
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Javascript 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Javascript  {{{
 au BufRead,BufNewFile *.json set filetype=javascript
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Chinese Input method issue
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Chinese Input method issue {{{
 set noimdisable
 autocmd! InsertLeave * set imdisable
 autocmd! InsertEnter * set noimdisable
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}} 
+" => Misc {{{
+
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
@@ -483,15 +452,13 @@ set termencoding=utf-8
 "Invisible chars
 set listchars=tab:▸\ ,eol:¬
 nnoremap <leader>l :set list!<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Abbrevations 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Abbrevations  {{{
 iabbrev cj@ crane@cranejin.com
 iabbrev cjo@ crane.jin@outlook.com
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+" => Helper functions {{{
 function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
@@ -557,3 +524,4 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
+"}}}
