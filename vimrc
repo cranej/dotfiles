@@ -39,7 +39,7 @@ let g:vim_markdown_frontmatter = 1
 "}}}
 " => General {{{
 
-autocmd BufReadPost *vimrc setlocal foldmethod=marker 
+autocmd BufReadPost *vimrc setlocal foldmethod=marker
 
 set encoding=utf-8
 set nocompatible
@@ -145,6 +145,8 @@ set smartcase
 
 " Highlight search results
 set hlsearch
+" Disable highlight when <leader><cr> is pressed
+noremap <silent> <space> :noh<cr>
 
 " Makes search act like search in modern browsers
 set incsearch
@@ -208,7 +210,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 " }}}
 " => Files, backups and undo {{{
 
@@ -220,7 +221,6 @@ set noswapfile
 "Turn off viminfo and persistent undo file for security reason
 set noundofile
 set viminfo=
-
 
 " }}}
 " => Text, tab and indent related {{{
@@ -242,7 +242,6 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-
 
 " }}}
 " => Visual mode related {{{
@@ -266,13 +265,6 @@ xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 noremap j gj
 noremap k gk
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-noremap <space> /
-noremap <c-space> ?
-
-" Disable highlight when <leader><cr> is pressed
-noremap <silent> <leader><cr> :noh<cr>
-
 " Smart way to move between windows
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
@@ -288,19 +280,16 @@ noremap <leader>ba :1,1000 bd!<cr>
 " Useful mappings for managing tabs
 noremap <leader>tn :tabnew<cr>
 noremap <leader>to :tabonly<cr>
-noremap <leader>tc :tabclose<cr>
-noremap <leader>tm :tabmove
-noremap <leader>tb :tabnext<CR>
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr><cr>
+noremap ]t :tabnext<CR>
+noremap [t :tabprevious<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nnoremap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
-
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-noremap <leader>te :tabedit <c-r>=expand("%:p:h")<cr><cr>
 
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -328,11 +317,11 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ %{fugitive#statusline()}\ %Y\ \ CW
 " Remap VIM 0 to first non-blank character
 noremap 0 ^
 
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nnoremap <M-j> mz:m+<cr>`z
-nnoremap <M-k> mz:m-2<cr>`z
-vnoremap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vnoremap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+" Move a line of text using <leader>[jk]
+nnoremap <leader>j mz:m+<cr>`z
+nnoremap <leader>k mz:m-2<cr>`z
+vnoremap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
+vnoremap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -366,8 +355,7 @@ noremap <leader>s= z=
 
 " }}}
 " => Markdown {{{
-au BufRead,BufNewFile *.md  set filetype=markdown
-au BufRead,BufNewFile *.markdown  set filetype=markdown
+au BufRead,BufNewFile *.md,*.markdown set filetype=markdown
 let g:markdown_cmd = "pandoc"
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
@@ -412,9 +400,7 @@ noremap <leader>mp :call MarkdownPreview()<CR>
 " => Haskell  {{{
 autocmd FileType haskell call HaskellHook()
 autocmd BufRead,BufNewFile *.lhs call HaskellHook()
-autocmd BufRead,BufNewFile *.hs set filetype=haskell
-autocmd BufRead,BufNewFile *.hsc set filetype=haskell
-autocmd BufRead,BufNewFile *.purs set filetype=haskell
+autocmd BufRead,BufNewFile *.hs,*.hsc,*.purs set filetype=haskell
 function HaskellHook()
     noremap <C-i> :!ghci -Wall "%:p"<CR>
     noremap <C-c> :%!stylish-haskell<CR>
@@ -431,17 +417,11 @@ set noimdisable
 autocmd! InsertLeave * set imdisable
 autocmd! InsertEnter * set noimdisable
 
-" }}} 
+" }}}
 " => Misc {{{
 
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Quickly open a buffer for scribble
-noremap <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-noremap <leader>x :e ~/buffer.md<cr>
 
 "Use unnamed clipboard to paste and copy directly
 set clipboard=unnamed
