@@ -2,6 +2,7 @@
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'Shougo/vimproc'
@@ -177,7 +178,7 @@ set nofoldenable
 " Enable syntax highlighting
 syntax enable
 
-set background=dark
+set background=light
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -193,6 +194,7 @@ if has("gui_running")
     " make the gvim window as big as possible
     set lines=999
     set columns=999
+    set background=dark
     if has("mac") || has("maxunix")
         set guifont=Monaco:h12
       elseif has("win32") || has("win16")
