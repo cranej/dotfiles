@@ -153,7 +153,7 @@ noremap <silent> <leader><cr> :noh<cr>
 
 "search
 noremap <space> /
-noremap <C-space> ?
+noremap <leader><space> ?
 
 " Makes search act like search in modern browsers
 set incsearch
