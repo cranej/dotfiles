@@ -59,6 +59,8 @@ set splitright
 " like <leader>w saves the current file
 let mapleader = ","
 let g:mapleader = ","
+" Map , to \
+nnoremap \ ,
 
 " Fast saving
 nnoremap <leader>w :w!<cr>
@@ -147,7 +149,11 @@ set smartcase
 " Highlight search results
 set hlsearch
 " Disable highlight when <leader><cr> is pressed
-noremap <silent> <space> :noh<cr>
+noremap <silent> <leader><cr> :noh<cr>
+
+"search
+noremap <space> /
+noremap <C-space> ?
 
 " Makes search act like search in modern browsers
 set incsearch
