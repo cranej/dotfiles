@@ -418,6 +418,7 @@ endfunction
 " }}}
 " => Javascript  {{{
 au BufRead,BufNewFile *.json set filetype=javascript
+au BufRead,BufNewFile *.json nnoremap <C-c> :%!aeson-pretty<CR>
 
 " }}}
 " => Chinese Input method issue {{{
