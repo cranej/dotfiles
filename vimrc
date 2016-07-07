@@ -93,7 +93,7 @@ if has("win32") || has("win16")
 
     " make binaries from ~/vimfiles/bin take preference
     let $PATH=expand("~")."/bin/gnubin;".$PATH
-    set grepprg=grep.exe\ -niH
+    set grepprg=grep.exe\ -niIH
 endif
 
 " }}}
