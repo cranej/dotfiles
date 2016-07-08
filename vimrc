@@ -170,6 +170,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
+set showcmd
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -177,7 +178,8 @@ set mat=2
 " This is kind of tricky for me. Refer: http://vim.wikia.com/wiki/Disable_beeping
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
-set tm=500
+set tm=1000
+set ttimeoutlen=50
 
 " Add a bit extra margin to the left
 set foldcolumn=1
@@ -304,11 +306,7 @@ au TabLeave * let g:lasttab = tabpagenr()
 noremap <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers
-try
-  set switchbuf=useopen,usetab
-  set stal=2
-catch
-endtry
+set switchbuf=useopen,usetab
 
 " }}}
 " => Status line {{{
