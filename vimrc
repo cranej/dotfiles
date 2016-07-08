@@ -14,6 +14,9 @@ Plugin 'eagletmt/ghcmod-vim'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-commentary'
+Plugin 'PProvost/vim-ps1'
 call vundle#end()
 
 filetype plugin indent on
