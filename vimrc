@@ -17,6 +17,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'PProvost/vim-ps1'
+Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 
 filetype plugin indent on
@@ -188,6 +189,8 @@ set nofoldenable
 syntax enable
 
 set background=light
+let g:solarized_termcolors=256
+colorscheme solarized
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -203,16 +206,11 @@ if has("gui_running")
     " make the gvim window as big as possible
     set lines=999
     set columns=999
-    set background=dark
     if has("mac") || has("maxunix")
         set guifont=Monaco:h12
       elseif has("win32") || has("win16")
         set guifont=Consolas:h11,Courier\ New:h10
     endif
-    try
-        colorscheme desert
-    catch
-    endtry
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
