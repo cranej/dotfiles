@@ -411,6 +411,14 @@ autocmd BufRead,BufNewFile *.hs,*.hsc,*.purs set filetype=haskell
 function HaskellHook()
     noremap <C-i> :!ghci -Wall "%:p"<CR>
     noremap <C-c> :%!stylish-haskell<CR>
+    noremap <C-g>t :GhcModType<CR>
+    noremap <C-g><C-t> :GhcModType<CR>
+    noremap <C-g>i :GhcModInfo<CR>
+    noremap <C-g><C-i> :GhcModInfo<CR>
+    noremap <C-g>p :GhcModInfoPreview<CR>
+    noremap <C-g><C-p> :GhcModInfoPreview<CR>
+    noremap <C-g>c :GhcModTypeClear<CR>
+    noremap <C-g><C-c> :GhcModTypeClear<CR>
     setlocal makeprg=stack\ build
 endfunction
 
