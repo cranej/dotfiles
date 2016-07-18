@@ -1,0 +1,17 @@
+set send_charset="utf-8"
+bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
+
+set folder = ~/Mail
+set mbox_type   = Maildir
+set spoolfile="+Personal/Inbox"
+mailboxes "+INBOX"
+unset record
+
+set sendmail="/usr/bin/msmtp"
+
+set realname = "Crane Jin"
+set from=crane@cranejin.com
+set use_from=yes
+set envelope_from=yes
+
+source ~/.mutt/mutt-colors-solarized-light-16.muttrc
