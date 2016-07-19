@@ -428,6 +428,10 @@ au BufRead,BufNewFile *.json set filetype=javascript
 au BufRead,BufNewFile *.json nnoremap <C-c> :%!aeson-pretty<CR>
 
 " }}}
+" => Xml  {{{
+au FileType xml nnoremap <C-c> :%!xmllint --format -<CR>
+
+"}}}
 " => Chinese Input method issue {{{
 set noimdisable
 autocmd! InsertLeave * set imdisable
