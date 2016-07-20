@@ -343,6 +343,11 @@
         <command>scrot</command>
       </action>
     </keybind>
+    <keybind key="C-A-space">
+        <action name="ShowMenu">
+            <menu>root-menu</menu>
+        </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
