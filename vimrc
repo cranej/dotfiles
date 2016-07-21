@@ -205,9 +205,8 @@ if has("gui_running")
     set guicursor=a:blinkon700
     set t_Co=256
     set guitablabel=%M\ %t
-    " make the gvim window as big as possible
-    set lines=999
-    set columns=999
+    set lines=40
+    set columns=120
     if has("mac") || has("maxunix")
         set guifont=Monaco:h12
       elseif has("win32") || has("win16")
