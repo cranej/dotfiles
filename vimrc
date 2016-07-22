@@ -53,7 +53,10 @@ set history=700
 
 " Set to auto read when a file is changed from the outside
 set autoread
-
+" Write automatically before running command
+set autowrite
+" One space instead of two after punctuation
+set nojoinspaces
 " no modeline
 set nomodeline
 

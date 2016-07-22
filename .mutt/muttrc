@@ -17,6 +17,7 @@ set envelope_from=yes
 
 set mailcap_path = ~/.mutt/mailcap
 set fast_reply
+set text_flowed=yes
 
 # Gpg
 # set pgp_use_gpg_agent = yes
