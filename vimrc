@@ -1,6 +1,6 @@
 " => Plugin {{{
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/after,~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
@@ -18,6 +18,9 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-commentary'
 Plugin 'PProvost/vim-ps1'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'unblevable/quick-scope'
+Plugin 'vim-scripts/Tagbar'
+Plugin 'fholgado/minibufexpl.vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -31,10 +34,6 @@ let NERDTreeIgnore=[
     \ ".*\\.cmx$",
     \ ".*\\.exe$",
     \ ]
-
-"open NERDTree if no file specified
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 "fugitive
 autocmd BufReadPost fugitive://* set bufhidden=delete
@@ -365,6 +364,16 @@ noremap <leader>s= z=
 " }}}
 " => Markdown {{{
 au BufRead,BufNewFile *.md,*.markdown set filetype=markdown
+au FileType markdown call EnableTodoItem()
+
+function EnableTodoItem()
+    set conceallevel=2
+    syn clear mkdListItem
+    syn clear mkdListItemLine
+    syn match itemCompleteMark "^\s*\(\d\+\.\|*\|\.\|-\)\s\+\zs\[x]" conceal cchar=√
+    syn match inProgressMark "^\s*\(\d\+\.\|*\|\.\|-\)\s\+\zs\[ ]" conceal cchar=□
+endfunction
+
 let g:markdown_cmd = "pandoc"
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
@@ -488,3 +497,8 @@ function! CopyMatches(reg)
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
 "}}}
+" => Vim debugging helpers {{{
+noremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" }}}
