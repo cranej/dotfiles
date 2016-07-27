@@ -59,7 +59,7 @@ bindsym Mod1+f fullscreen
 # CUSTOMIZED change container layout (stacked, tabbed, toggle split)
 bindsym Mod1+Shift+s layout stacking
 bindsym Mod1+Shift+w layout tabbed
-bindsym Mod1+Shift+e layout toggle split
+bindsym Mod1+Shift+d layout toggle split
 
 # toggle tiling / floating
 bindsym Mod1+Shift+space floating toggle
