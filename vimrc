@@ -1,6 +1,6 @@
 " => Plugin {{{
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/after,~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
@@ -364,12 +364,14 @@ noremap <leader>s= z=
 " }}}
 " => Markdown {{{
 au BufRead,BufNewFile *.md,*.markdown set filetype=markdown
-au FileType markdown call MarkdownHook()
+au FileType markdown call EnableTodoItem()
 
-function MarkdownHook()
+function EnableTodoItem()
     set conceallevel=2
-    syn match itemCompleteMark "^\s*\zs\(\d\+\.\|*\|\.\|-\)\s\s*\[x]" conceal cchar=√
-    syn match inProgressMark "^\s*\zs\(\d\+\.\|*\|\.\|-\)\s\s*\[ ]" conceal cchar=□
+    syn clear mkdListItem
+    syn clear mkdListItemLine
+    syn match itemCompleteMark "^\s*\(\d\+\.\|*\|\.\|-\)\s\+\zs\[x]" conceal cchar=√
+    syn match inProgressMark "^\s*\(\d\+\.\|*\|\.\|-\)\s\+\zs\[ ]" conceal cchar=□
 endfunction
 
 let g:markdown_cmd = "pandoc"
