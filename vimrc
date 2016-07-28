@@ -209,7 +209,11 @@ let g:solarized = 1
 syntax enable
 
 set background=light
-let g:solarized_termcolors=256
+
+if has("mac") || has("maxunix")
+    let g:solarized_termcolors=256
+endif
+
 colorscheme solarized
 
 " Set extra options when running in GUI mode
