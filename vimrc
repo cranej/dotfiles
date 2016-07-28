@@ -12,6 +12,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'fholgado/minibufexpl.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'qpkorr/vim-renamer'
 Plugin 'scrooloose/nerdtree'
@@ -84,6 +85,10 @@ vnoremap D "_d
 
 " Quick-Scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Tagbar
+noremap <C-\> :TagbarToggle<CR>
+noremap <C-g> :IndentGuidesToggle<CR>
 
 "}}}
 " => Windows specified stuff {{{
@@ -507,13 +512,13 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
-"}}}
 
+" Diff current buffer with original loaded file before save
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
                 \ | wincmd p | diffthis
 endif
-
+"}}}
 " => Vim debugging helpers {{{
 noremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
