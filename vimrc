@@ -2,25 +2,29 @@
 filetype off
 set rtp+=~/.vim/after,~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'Shougo/vimproc'
 Plugin 'Align'
-Plugin 'tpope/vim-surround'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'qpkorr/vim-renamer'
-Plugin 'eagletmt/ghcmod-vim'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-commentary'
 Plugin 'PProvost/vim-ps1'
+Plugin 'Shougo/vimproc'
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'unblevable/quick-scope'
-Plugin 'vim-scripts/Tagbar'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'eagletmt/ghcmod-vim'
+Plugin 'elixir-lang/vim-elixir'
 Plugin 'fholgado/minibufexpl.vim'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'qpkorr/vim-renamer'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'unblevable/quick-scope'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-scripts/Tagbar'
 call vundle#end()
 
 filetype plugin indent on
@@ -78,6 +82,14 @@ command W w !sudo tee % > /dev/null
 " Delete to hole
 nnoremap D "_d
 vnoremap D "_d
+
+" Quick-Scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Tagbar
+noremap <C-\> :TagbarToggle<CR>
+noremap <C-g> :IndentGuidesToggle<CR>
+
 "}}}
 " => Windows specified stuff {{{
 
@@ -186,6 +198,10 @@ set ttimeoutlen=50
 " Add a bit extra margin to the left
 set foldcolumn=1
 set nofoldenable
+
+" aireline
+let g:Powerline_symbols = 'fancy'
+let g:solarized = 1
 " }}}
 " => Colors and Fonts {{{
 
@@ -210,9 +226,9 @@ if has("gui_running")
     set lines=40
     set columns=120
     if has("mac") || has("maxunix")
-        set guifont=Monaco:h12
+        set guifont=Source\ Code\ Pro\ 11,Monaco:h12
       elseif has("win32") || has("win16")
-        set guifont=Consolas:h11,Courier\ New:h10
+        set guifont=Source\ Code\ Pro\ 11,Consolas:h11,Courier\ New:h10
     endif
 endif
 
@@ -496,9 +512,74 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
+
+" Diff current buffer with original loaded file before save
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+                \ | wincmd p | diffthis
+endif
 "}}}
 " => Vim debugging helpers {{{
 noremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
             \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
             \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+" }}}
+" ==> Ctags {{{
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'f:functions',
+        \ 'functions:functions',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records'
+    \ ]
+\ }
+
+let g:tagbar_type_ps1 = {
+    \ 'ctagstype' : 'powershell',
+    \ 'kinds'     : [
+        \ 'f:function',
+        \ 'i:filter',
+        \ 'a:alias'
+    \ ]
+\ }
+
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
 " }}}
