@@ -7,6 +7,9 @@ set $down k
 set $left h
 set $right l
 
+workspace_layout stacking
+default_orientation vertical
+
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 

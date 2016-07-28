@@ -117,6 +117,7 @@ endif
 " }}}
 " => VIM user interface {{{
 
+set t_Co=256
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -225,7 +226,6 @@ if has("gui_running")
     set guioptions-=r
     set guioptions-=L
     set guicursor=a:blinkon700
-    set t_Co=256
     set guitablabel=%M\ %t
     set lines=40
     set columns=120
@@ -234,6 +234,9 @@ if has("gui_running")
       elseif has("win32") || has("win16")
         set guifont=Source\ Code\ Pro\ 11,Consolas:h11,Courier\ New:h10
     endif
+    try
+        set guifont=Source\ Code\ Pro\ 11
+    endtry
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
