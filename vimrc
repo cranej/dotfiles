@@ -230,13 +230,15 @@ if has("gui_running")
     set lines=40
     set columns=120
     if has("mac") || has("maxunix")
-        set guifont=Source_Code_Pro:h11,Monaco:h12
-      elseif has("win32") || has("win16")
+        set guifont=Source_Code_Pro:h12,Monaco:h12
+    elseif has("win32") || has("win16")
         set guifont=Source_Code_Pro:h11,Consolas:h11,Courier\ New:h10
+    else
+        " Linux
+        try
+            set guifont=Source_Code_Pro:h11
+        endtry
     endif
-    try
-        set guifont=Source_Code_Pro:h11
-    endtry
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
