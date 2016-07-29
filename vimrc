@@ -230,12 +230,12 @@ if has("gui_running")
     set lines=40
     set columns=120
     if has("mac") || has("maxunix")
-        set guifont=Source\ Code\ Pro\ 11,Monaco:h12
+        set guifont=Source_Code_Pro:h11,Monaco:h12
       elseif has("win32") || has("win16")
-        set guifont=Source\ Code\ Pro\ 11,Consolas:h11,Courier\ New:h10
+        set guifont=Source_Code_Pro:h11,Consolas:h11,Courier\ New:h10
     endif
     try
-        set guifont=Source\ Code\ Pro\ 11
+        set guifont=Source_Code_Pro:h11
     endtry
 endif
 
