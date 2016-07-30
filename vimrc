@@ -77,7 +77,7 @@ nnoremap <leader>w :w!<cr>
 
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command! W w !sudo tee % > /dev/null
 
 " Delete to hole
 nnoremap D "_d
@@ -391,7 +391,7 @@ noremap <leader>s= z=
 au BufRead,BufNewFile *.md,*.markdown set filetype=markdown
 au FileType markdown call EnableTodoItem()
 
-function EnableTodoItem()
+function! EnableTodoItem()
     set conceallevel=2
     syn clear mkdListItem
     syn clear mkdListItemLine
@@ -400,6 +400,8 @@ function EnableTodoItem()
 endfunction
 
 let g:markdown_cmd = "pandoc"
+let g:markdown_flavor="markdown_github"
+let g:markdown_extensions=[]
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
     let g:start_cmd = "start"
@@ -414,37 +416,50 @@ endif
 function! MarkdownPreview()
     let l:preview_file = tempname() . ".html"
     execute "w"
-    execute "!" . g:markdown_cmd . " -o " . l:preview_file . " " . bufname("%") . " && " . g:start_cmd . " " . l:preview_file
+    let l:command = [
+                \ g:markdown_cmd,
+                \ '-s',
+                \ '-f',
+                \ join([g:markdown_flavor] + g:markdown_extensions, "+"),
+                \ '-o',
+                \ l:preview_file,
+                \ bufname("%"),
+                \ '&&',
+                \ g:start_cmd,
+                \ l:preview_file]
+    execute "!" . join(l:command,  " ")
     redraw
 endfunction
 
 function! ConvertMarkdown(...)
     let l:cwd = getcwd()
-    let l:to = "html"
+    let l:extension = "html"
+    let l:extenson_format_map = {"html":"html5", "pdf":"latex", "md":"markdown"}
     let l:from = "markdown_github-hard_line_breaks+pandoc_title_block"
     let l:folder = expand("%:p:h") . "/generated"
     if a:0 > 0
-        let l:to = a:1
+        let l:extension = a:1
     endif
     if a:0 > 1
         let l:folder = a:2
     endif
-    let l:output = l:folder . "/" . expand("%:t:r") . "." . l:to
-    execute "silent w"
+    let l:to_format=get(l:extenson_format_map, l:extension, l:extension)
+    let l:output = l:folder . "/" . expand("%:t:r") . "." . l:extension
     :lcd %:p:h
-    execute "!" . g:markdown_cmd . " -t " . l:to . " -f " . l:from . " -o " . l:output . " " . expand("%")
+    execute "!" . g:markdown_cmd . " -s -t " . l:to_format .  " -f " . l:from . " -o " . l:output . " " . expand("%")
     redraw
     execute "cd " . l:cwd
 endfunction
 
-command! -nargs=* ConvertMd :call ConvertMarkdown(<f-args>)
+command! -nargs=* ConvertMarkdown :call ConvertMarkdown(<f-args>)
+command! -nargs=0 MarkdownPreview :call MarkdownPreview()
 noremap <leader>mp :call MarkdownPreview()<CR>
 " }}}
 " => Haskell  {{{
 autocmd FileType haskell call HaskellHook()
 autocmd BufRead,BufNewFile *.lhs call HaskellHook()
 autocmd BufRead,BufNewFile *.hs,*.hsc,*.purs set filetype=haskell
-function HaskellHook()
+function! HaskellHook()
     noremap <C-i> :!ghci -Wall "%:p"<CR>
     noremap <C-c> :%!stylish-haskell<CR>
     noremap <C-g>t :GhcModType<CR>
