@@ -163,3 +163,6 @@ bindsym Mod1+Shift+p mode "$mode_system"
 bar {
         status_command i3status
 }
+
+exec xrandr --size 1440x900
+exec --no-startup-id goldendict
