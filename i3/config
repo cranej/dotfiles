@@ -164,5 +164,5 @@ bar {
         status_command i3status
 }
 
-exec xrandr --size 1440x900
+exec --no-startup-id xrandr --size 1440x900
 exec --no-startup-id goldendict
