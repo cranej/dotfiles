@@ -401,7 +401,7 @@ endfunction
 
 let g:markdown_cmd = "pandoc"
 let g:markdown_flavor="markdown_github"
-let g:markdown_extensions=[]
+let g:markdown_extensions=["definition_lists"]
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
     let g:start_cmd = "start"
