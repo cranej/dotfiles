@@ -194,8 +194,10 @@ for_window [class="feh"] floating enable
 for_window [window_role="(?i)pop-up"] floating enable
 
 # workspace assignment
-assign [class="(?!)firefoz"] -> 1
-assign [class="(?!)transmission-gtk"] -> 10
+assign [class="Firefox"] 2: Web
+assign [class="Transmission-gtk"] 10
 
 exec --no-startup-id xrandr --size 1440x900
 exec --no-startup-id goldendict
+#background image
+exec_always --no-startup-id feh --randomize --bg-scale /usr/share/wallpapers/**/1600*.png
