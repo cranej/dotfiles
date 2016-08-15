@@ -7,7 +7,7 @@ Plugin 'PProvost/vim-ps1'
 Plugin 'Shougo/vimproc'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'elixir-lang/vim-elixir'
@@ -44,6 +44,10 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 
 "vim-markdown YAML support
 let g:vim_markdown_frontmatter = 1
+
+"vim-better-whitespace
+let g:better_whitespace_enabled = 0
+let g:strip_whitespace_on_save = 1
 "}}}
 " => General {{{
 
