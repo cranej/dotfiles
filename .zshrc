@@ -89,3 +89,4 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias gpg=gpg2
 alias cls=clear
+alias gd=goldendict

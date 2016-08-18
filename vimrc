@@ -206,7 +206,7 @@ set nofoldenable
 
 " aireline
 let g:Powerline_symbols = 'fancy'
-let g:solarized = 1
+let g:airline_theme = 'simple'
 " }}}
 " => Colors and Fonts {{{
 
@@ -215,9 +215,7 @@ syntax enable
 
 set background=light
 
-if has("mac") || has("maxunix")
-    let g:solarized_termcolors=256
-endif
+let g:solarized_termcolors=256
 
 colorscheme solarized
 
