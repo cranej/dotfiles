@@ -90,3 +90,4 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias gpg=gpg2
 alias cls=clear
 alias gd=goldendict
+alias mplay="mplayer -ass -subcp cp950 -sub-fuzziness 2 -really-quiet"

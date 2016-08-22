@@ -213,7 +213,7 @@ let g:airline_theme = 'simple'
 " Enable syntax highlighting
 syntax enable
 
-set background=light
+set background=dark
 
 let g:solarized_termcolors=256
 
