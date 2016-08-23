@@ -73,6 +73,9 @@ else
   export EDITOR='vim'
 fi
 
+#Gnupg
+export GPG_TTY=$(tty)
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
