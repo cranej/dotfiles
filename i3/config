@@ -201,7 +201,7 @@ for_window [window_role="(?i)pop-up"] floating enable
 
 # workspace assignment
 assign [class="Firefox"] 2: Web
-assign [class="Transmission-gtk"] 10
+assign [class="Transmission-gtk"] 5: Others
 
 exec --no-startup-id xrandr --size 1440x900
 exec --no-startup-id goldendict
@@ -211,3 +211,5 @@ exec --no-startup-id compton -b
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id udiskie --smart-tray
 exec --no-startup-id fcitx
+exec --no-startup-id i3-sensible-terminal
+exec --no-startup-id firefox
