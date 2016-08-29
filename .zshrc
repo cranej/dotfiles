@@ -95,3 +95,5 @@ alias cls=clear
 alias gd=goldendict
 alias mplay="mplayer -ass -subcp cp950 -sub-fuzziness 2 -really-quiet"
 alias mplayl="mplayer -ass -subcp cp950 -sub-fuzziness 2 -really-quiet -playlist"
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
