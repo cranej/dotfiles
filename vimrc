@@ -403,7 +403,8 @@ endfunction
 
 let g:markdown_cmd = "pandoc"
 let g:markdown_flavor="markdown_github"
-let g:markdown_extensions=["definition_lists"]
+let g:markdown_extensions=["definition_lists", "pandoc_title_block"]
+let g:markdown_extensions_disable=["hard_line_breaks"]
 let g:start_cmd = "open" "for mac osx use open
 if has("win32") || has("win16")
     let g:start_cmd = "start"
@@ -415,6 +416,12 @@ elseif has("unix")
     endif
 endif
 
+function! GetMarkdownFormat()
+    return g:markdown_flavor .
+        \ join(map(copy(g:markdown_extensions), '"+".v:val'), "") .
+        \ join(map(copy(g:markdown_extensions_disable), '"-".v:val'), "")
+endfunction
+
 function! MarkdownPreview()
     let l:preview_file = tempname() . ".html"
     execute "w"
@@ -422,7 +429,7 @@ function! MarkdownPreview()
                 \ g:markdown_cmd,
                 \ '-s',
                 \ '-f',
-                \ join([g:markdown_flavor] + g:markdown_extensions, "+"),
+                \ GetMarkdownFormat(),
                 \ '-o',
                 \ l:preview_file,
                 \ bufname("%"),
@@ -437,7 +444,7 @@ function! ConvertMarkdown(...)
     let l:cwd = getcwd()
     let l:extension = "html"
     let l:extenson_format_map = {"html":"html5", "pdf":"latex", "md":"markdown"}
-    let l:from = "markdown_github-hard_line_breaks+pandoc_title_block"
+    let l:from = GetMarkdownFormat()
     let l:folder = expand("%:p:h") . "/generated"
     if a:0 > 0
         let l:extension = a:1
