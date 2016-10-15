@@ -238,7 +238,7 @@ if has("gui_running")
     else
         " Linux
         try
-            set guifont=Source\ Code\ Pro\ 11
+            set guifont=DejaVu\ Sans\ Mono\ 11
         endtry
     endif
 endif
