@@ -79,8 +79,9 @@ export GPG_TTY=$(tty)
 unset SSH_AGENT_PID
 if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
   gpg-connect-agent /bye >/dev/null 2>&1
-  export SSH_AUTH_SOCK=/run/user/$UID/gnupg/S.gpg-agent.ssh
 fi
+
+export SSH_AUTH_SOCK=/run/user/$UID/gnupg/S.gpg-agent.ssh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
