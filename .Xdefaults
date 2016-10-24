@@ -1,4 +1,4 @@
-URxvt.font: xft:DejaVu Sans Mono:size=10
+URxvt.font: xft:DejaVu Sans Mono:size=11
 !URxvt.letterSpace: -3
 
 *background: #1D1F21
