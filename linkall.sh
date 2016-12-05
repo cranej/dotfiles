@@ -14,5 +14,6 @@ ln -s $FROM/.zshrc $TO/.zshrc
 ln -s $FROM/gitglobalconfig $TO/.gitconfig
 ln -s $FROM/vimrc $TO/.vimrc
 ln -s $FROM/s.sh $TO/s.sh
+ln -s $FROM/battery_monitor_loop.sh $TO/battery_monitor_loop
 ln -s $FROM/i3 $TO/.config/i3
 ln -s $FROM/tmux.conf $TO/.tmux.conf

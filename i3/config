@@ -217,4 +217,5 @@ exec --no-startup-id udiskie --smart-tray
 exec --no-startup-id fcitx
 exec --no-startup-id i3-sensible-terminal
 exec --no-startup-id firefox
+exec --no-startup-id ./battery_monitor_loop
 exec --no-startup-id transmission-gtk
