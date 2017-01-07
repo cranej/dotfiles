@@ -7,6 +7,8 @@ client.focused_inactive     #3f3f3f #3F3F3F #7f9f7f #3f3f3f
 client.unfocused            #3f3f3f #3F3F3F #DCDCCC #3f3f3f
 client.urgent               #dca3a3 #dca3a3 #DCDCCC #3f3f3f
 
+set $wallpaper $HOME/workspace/dotfiles/wallpaper
+
 # Take a screenshot
 # scrot & gimp - root
 bindsym Mod1+p exec scrot -e 'mv $f ~/ScreenShot.png && feh ~/ScreenShot.png'
@@ -41,10 +43,15 @@ bindsym $mod+d exec dmenu_run
 # retrieve password
 bindsym $mod+p exec passmenu
 bindsym $mod+shift+p exec "passmenu --type"
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# Screen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight + 12
+bindsym XF86MonBrightnessDown exec xbacklight - 12
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
 # change focus
 bindsym $mod+$left focus left
@@ -160,11 +167,13 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $Locker i3lock && sleep 1
+#TODO: $Locker seems not work
+set $Locker i3lock -i $wallpaper
+bindsym $mod+Ctrl+l exec i3lock -i $wallpaper
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym l exec --no-startup-id i3lock -i $wallpaper, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
     bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
@@ -178,26 +187,40 @@ mode "$mode_system" {
 
 bindsym $mod+Shift+q mode "$mode_system"
 
-# Brightness
-bindsym XF86MonBrightnessDown exec ~/.local/bin/brightness - 1500
-bindsym XF86MonBrightnessUp exec ~/.local/bin/brightness + 1500
+# Brightness for macOs
+# bindsym XF86MonBrightnessDown exec ~/.local/bin/brightness - 1500
+# bindsym XF86MonBrightnessUp exec ~/.local/bin/brightness + 1500
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
     colors {
-        background #3f3f3f
-        statusline #dcdccc
+      background #000000
+        statusline #FFFFFF
+        separator #00FF00
 
-        focused_workspace  #93b3a3 #3f3f3f #93b3a3
-        active_workspace   #ffcfaf #3f3f3f #ffcfaf
-        inactive_workspace #636363 #3f3f3f #dcdccc
-        urgent_workspace   #dca3a3 #3f3f3f #dca3a3
+        focused_workspace  #008fff #007fff #ffffff
+        active_workspace   #333333 #5f676a #ffffff
+        inactive_workspace #333333 #222222 #888888
+        urgent_workspace #aa0000 #990000 #ffffff
+
+        # background #3f3f3f
+        # statusline #dcdccc
+
+        # focused_workspace  #93b3a3 #3f3f3f #93b3a3
+        # active_workspace   #ffcfaf #3f3f3f #ffcfaf
+        # inactive_workspace #636363 #3f3f3f #dcdccc
+        # urgent_workspace   #dca3a3 #3f3f3f #dca3a3
     }
     # tray_output primary
     workspace_buttons yes
-    status_command i3status
+    position top
+    # status_command i3status
+    status_command i3status -c ~/.config/i3/i3status.conf
 }
+
+# wallpaper
+exec --no-startup-id feh --bg-scale $wallpaper
 
 # floating some windows
 for_window [class="feh"] floating enable
@@ -207,10 +230,10 @@ for_window [window_role="(?i)pop-up"] floating enable
 assign [class="Firefox"] 2: Web
 assign [class="Transmission-gtk"] 5: Others
 
-exec --no-startup-id xrandr --size 1440x900
+# exec --no-startup-id xrandr --size 1440x900
 exec --no-startup-id goldendict
 #background image
-exec_always --no-startup-id feh --randomize --bg-scale /usr/share/wallpapers/**/1600*.png
+# exec_always --no-startup-id feh --randomize --bg-scale /usr/share/wallpapers/**/1600*.png
 exec --no-startup-id compton -b
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id udiskie --smart-tray
@@ -218,4 +241,4 @@ exec --no-startup-id fcitx
 exec --no-startup-id i3-sensible-terminal
 exec --no-startup-id firefox
 exec --no-startup-id ./battery_monitor_loop
-exec --no-startup-id transmission-gtk
+# exec --no-startup-id transmission-gtk
