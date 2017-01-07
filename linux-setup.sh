@@ -30,8 +30,11 @@ ln -s $FROM/gitglobalconfig $TO/.gitconfig
 ln -s $FROM/vimrc $TO/.vimrc
 ln -s $FROM/s.sh $TO/s.sh
 ln -s $FROM/battery_monitor_loop.sh $TO/battery_monitor_loop
-ln -s $FROM/i3 $TO/.config/i3
 ln -s $FROM/tmux.conf $TO/.tmux.conf
+mkdir -p $HOME/.config
+ln -s $FROM/i3 $TO/.config/i3
+mkdir -p $HOME/.gnupg
+ln -s $FROM/gpg-agent.conf $TO/.gnupg/gpg-agent.conf
 
 if [ ! -f /etc/X11/xorg.conf.d/70-synaptics.conf ]
 then

@@ -1,0 +1,25 @@
+## TODO: Remove noconfirm flag as some packages have dependencies need to be choosen manually
+
+## Remove master key from pc
+
+    gpg --list-secret-keys --with-keygrip
+    gpg-connect-agent "DELETE_KEY E4C4109EB935BF7492DC46D025B98F5C0CDCE972" /bye
+
+## Setup gpg-agent as ssh-agent and add gpg key as ssh key
+
+1. Add `enable-ssh-support` to gpg-agent.conf
+
+2. Add the following to .zshrc/.bashrc etc.
+
+    export GPG_TTY=$(tty)
+
+    unset SSH_AGENT_PID
+    if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
+      gpg-connect-agent /bye >/dev/null 2>&1
+    fi
+
+    export SSH_AUTH_SOCK=/run/user/$UID/gnupg/S.gpg-agent.ssh
+
+3. Add keygrip of gpg generated key (Authentication purpose) to sshcontrol
+
+    echo xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx >> ~/.gnupg/sshcontrol
