@@ -1,5 +1,5 @@
 # ~/.mailcap
-text/html; firefox %s; test=test -n "$DISPLAY"; nametemplate=%s.html
+text/html; firefox %s; test=test -n "$DISPLAY";needsterminal
 text/html; w3m -v -F -T text/html %s; nametemplate=%s.html; needsterminal
 text/*; less '%s'; edit=vim '%s'; needsterminal; test=test -t 0
 video/*; mplayer -quiet -vo fb,fa '%s'; description="Video"; needsterminal; test=test -z "$DISPLAY" -a -t 0

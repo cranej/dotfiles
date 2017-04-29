@@ -25,6 +25,7 @@ Plugin 'unblevable/quick-scope'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/Tagbar'
+Plugin 'udalov/kotlin-vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -412,7 +413,9 @@ elseif has("unix")
     let s:os = substitute(system('uname'), "\n", "", "")
     if s:os!= "Darwin"
         "for linux use sesible-browser
-        let g:start_cmd = "sensible-browser"
+        " let g:start_cmd = "sensible-browser"
+        let g:start_cmd = "firefox"
+
     endif
 endif
 

@@ -19,7 +19,8 @@ set signature=~/.mutt/signature
 set mailcap_path = ~/.mutt/mailcap
 set fast_reply
 set text_flowed=yes
-
+set sort=threads
+set sort_aux=last-date-received
 # Gpg
 set crypt_use_gpgme = yes
 set pgp_use_gpg_agent = yes
@@ -29,7 +30,7 @@ set crypt_replyencrypt = yes
 set crypt_replysignencrypted = yes
 set crypt_timestamp = yes
 
-# source ~/.mutt/mutt-colors-solarized-light-16.muttrc
+source ~/.mutt/mutt-colors-solarized-light-16.muttrc
 # -*-muttrc-*-
 
 # Palette for use with the Linux console.  Black background.

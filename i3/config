@@ -113,7 +113,7 @@ bindsym $mod+minus scratchpad show
 # switch to workspace
 bindsym $mod+1 workspace 1: Term
 bindsym $mod+2 workspace 2: Web
-bindsym $mod+3 workspace 3: Editor
+bindsym $mod+3 workspace 3: Email
 bindsym $mod+4 workspace 4: Media
 bindsym $mod+5 workspace 5: Others
 bindsym $mod+6 workspace 6
@@ -125,7 +125,7 @@ bindsym $mod+0 workspace 10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1: Term
 bindsym $mod+Shift+2 move container to workspace 2: Web
-bindsym $mod+Shift+3 move container to workspace 3: Editor
+bindsym $mod+Shift+3 move container to workspace 3: Email
 bindsym $mod+Shift+4 move container to workspace 4: Media
 bindsym $mod+Shift+5 move container to workspace 5: Others
 bindsym $mod+Shift+6 move container to workspace 6
@@ -175,8 +175,9 @@ set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) re
 mode "$mode_system" {
     bindsym l exec --no-startup-id i3lock -i $wallpaper, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    # bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym s exec --no-startup-id i3lock -i $wallpaper && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id i3lock -i $wallpaper && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
@@ -229,6 +230,8 @@ for_window [window_role="(?i)pop-up"] floating enable
 # workspace assignment
 assign [class="Firefox"] 2: Web
 assign [class="Transmission-gtk"] 5: Others
+assign [class="^URxvt$" instance="^offlineimap$"] 3: Email
+assign [class="^URxvt$" instance="^mutt$"] 3: Email
 
 # exec --no-startup-id xrandr --size 1440x900
 exec --no-startup-id goldendict
@@ -241,4 +244,6 @@ exec --no-startup-id fcitx
 exec --no-startup-id i3-sensible-terminal
 exec --no-startup-id firefox
 exec --no-startup-id ./battery_monitor_loop
+exec --no-startup-id urxvt -name offlineimap -e offlineimap
+exec --no-startup-id urxvt -name mutt -e mutt
 # exec --no-startup-id transmission-gtk
