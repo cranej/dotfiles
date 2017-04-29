@@ -24,7 +24,7 @@ set sort_aux=last-date-received
 # Gpg
 set crypt_use_gpgme = yes
 set pgp_use_gpg_agent = yes
-set pgp_sign_as = 0xF8C4BF46
+set pgp_sign_as = 0xEB36AD80
 set pgp_timeout = 3600
 set crypt_replyencrypt = yes
 set crypt_replysignencrypted = yes
