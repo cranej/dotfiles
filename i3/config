@@ -188,6 +188,8 @@ mode "$mode_system" {
 
 bindsym $mod+Shift+q mode "$mode_system"
 
+focus_follows_mouse no
+
 # Brightness for macOs
 # bindsym XF86MonBrightnessDown exec ~/.local/bin/brightness - 1500
 # bindsym XF86MonBrightnessUp exec ~/.local/bin/brightness + 1500

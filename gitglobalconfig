@@ -8,6 +8,7 @@
     autocrlf = false
     editor = vim
     fscache = true
+    quotePath = false
 [alias]
     unstage = reset HEAD --
     last = !git --no-pager log -1 HEAD

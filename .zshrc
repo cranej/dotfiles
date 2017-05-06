@@ -93,6 +93,14 @@ function unproxy() {
     unset https_proxy
 }
 
+function tpoff(){
+    synclient TouchpadOff=1
+}
+
+function tpon(){
+    synclient TouchpadOff=0
+}
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -114,3 +122,4 @@ alias mplay="mplayer -ass -subcp cp950 -sub-fuzziness 2 -really-quiet"
 alias mplayl="mplayer -ass -subcp cp950 -sub-fuzziness 2 -really-quiet -playlist"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
+alias dict=goldendict
