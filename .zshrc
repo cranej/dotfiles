@@ -82,6 +82,17 @@ if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
 fi
 
 export SSH_AUTH_SOCK=/run/user/$UID/gnupg/S.gpg-agent.ssh
+
+function doproxy() {
+    export http_proxy=socks5://127.0.0.1:8090
+    export https_proxy=socks5://127.0.0.1:8090
+}
+
+function unproxy() {
+    unset http_proxy
+    unset https_proxy
+}
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
