@@ -218,7 +218,7 @@ set background=dark
 
 let g:solarized_termcolors=256
 
-colorscheme solarized
+colorscheme desert
 
 " Set extra options when running in GUI mode
 if has("gui_running")
