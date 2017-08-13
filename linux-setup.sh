@@ -33,6 +33,7 @@ ln -s $FROM/battery_monitor_loop.sh $TO/battery_monitor_loop
 ln -s $FROM/tmux.conf $TO/.tmux.conf
 mkdir -p $HOME/.config
 ln -s $FROM/i3 $TO/.config/i3
+ln -s $FROM/compton.conf $TO/.config/compton.conf
 mkdir -p $HOME/.gnupg
 ln -s $FROM/gpg-agent.conf $TO/.gnupg/gpg-agent.conf
 
