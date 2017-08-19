@@ -5,9 +5,13 @@ font pango:Canteral 9
 # client.focused              #688060 #688060 #303030 #ffcfaf
 # client.focused_inactive     #3f3f3f #3F3F3F #7f9f7f #3f3f3f
 # client.unfocused            #3f3f3f #3F3F3F #DCDCCC #3f3f3f
-# client.urgent               #dca3a3 #dca3a3 #DCDCCC #3f3f3f
+client.urgent               #dca3a3 #dca3a3 #DCDCCC #3f3f3f
 
 set $wallpaper $HOME/workspace/dotfiles/wallpaper
+
+new_window pixel 2
+
+hide_edge_borders vertical
 
 # Take a screenshot
 # scrot & gimp - root
@@ -77,19 +81,19 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# CUSTOMIZED split in horizontal orientation
-#bindsym $mod+s split h
+# split in horizontal orientation
+bindsym $mod+Shift+s split h
 
 # split in vertical orientation
-#bindsym $mod+v split v
+bindsym $mod+Shift+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
-# CUSTOMIZED change container layout (stacked, tabbed, toggle split)
-bindsym $mod+Shift+s layout stacking
-bindsym $mod+Shift+w layout tabbed
-bindsym $mod+Shift+d layout toggle split
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
