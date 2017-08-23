@@ -10,6 +10,8 @@ unset record
 
 set sendmail="/usr/bin/msmtp"
 
+set header_cache=~/.mutt/hcache
+set read_inc=1000
 set realname = "Crane Jin"
 set from=crane.jin@outlook.com
 set use_from=yes
@@ -30,27 +32,28 @@ set crypt_replyencrypt = yes
 set crypt_replysignencrypted = yes
 set crypt_timestamp = yes
 
-source ~/.mutt/mutt-colors-solarized-light-16.muttrc
+#source ~/.mutt/mutt-colors-solarized-light-16.muttrc
+source ~/.mutt/atomic.muttrc
 # -*-muttrc-*-
 
 # Palette for use with the Linux console.  Black background.
 
-color hdrdefault blue black
-color quoted blue black
-color signature blue black
-color attachment red black
-color prompt brightmagenta black
-color message brightred black
-color error brightred black
-color indicator black red
-color status brightgreen blue
-color tree white black
-color normal white black
-color markers red black
-color search white black
-color tilde brightmagenta black
-color index blue black ~F
-color index red black "~N|~O"
+# color hdrdefault blue black
+# color quoted blue black
+# color signature blue black
+# color attachment red black
+# color prompt brightmagenta black
+# color message brightred black
+# color error brightred black
+# color indicator black red
+# color status brightgreen blue
+# color tree white black
+# color normal white black
+# color markers red black
+# color search white black
+# color tilde brightmagenta black
+# color index blue black ~F
+# color index red black "~N|~O"
 
 # color body brightwhite black '\*+[^*]+\*+'
 # color body brightwhite black '_+[^_]+_+'

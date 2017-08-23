@@ -1,4 +1,6 @@
 URxvt.font: xft:DejaVu Sans Mono:size=12
+!URxvt.font: xft:Source Code Pro:size=12
+!URxvt.font: xft:Inconsolata:size=14
 URxvt.scrollBar: false
 !URxvt.letterSpace: -3
 
@@ -30,8 +32,16 @@ URxvt.scrollBar: false
 *color15: #C5C8C6
 
 !Xft.dpi: 130
-Xft.autohint: 0
-Xtf.lcdfilter: lcddefault
-Xft.hintstyle: hintfull
-Xft.antialias: 1
-Xft.rgba: rga
+!Xft.autohint: 0
+!Xtf.lcdfilter: lcddefault
+!Xft.hintstyle: hintfull
+!Xft.antialias: 1
+!Xft.rgba: rga
+
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+Xft.autohint:   false
+Xft.lcdfilter:  lcddefault
