@@ -5,6 +5,9 @@ export ZSH=$HOME/.oh-my-zsh
 export HASKELL=$HOME/.stack/programs/x86_64-linux/ghc-7.10.3/bin
 export LOCAL_BIN=$HOME/.local/bin
 export PATH=$HASKELL:$LOCAL_BIN:$PATH
+export PATH="$HOME/.node/bin:$PATH"
+export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"
+export MANPATH="$HOME/.node/share/man:$MANPATH"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
