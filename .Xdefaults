@@ -1,6 +1,8 @@
-URxvt.font: xft:DejaVu Sans Mono:size=12
+URxvt.font: xft:DejaVu Sans Mono:size=12,xft:WenQuanYi Zen Hei Mono:antialias=true
 !URxvt.font: xft:Source Code Pro:size=12
 !URxvt.font: xft:Inconsolata:size=14
+!URxvt.font: xft:DejaVu Sans Mono:pixelsize=12:antialias=false,xft:WenQuanYi Bitmap Song:pixelsize=12:antialias=false
+!URxvt.boldFont: xft:DejaVu Sans Mono:pixelsize=12:style=Bold:antialias=false,xft:WenQuanYi Bitmap Song:pixelsize=12:style=Bold:antialias=false
 URxvt.scrollBar: false
 !URxvt.letterSpace: -3
 

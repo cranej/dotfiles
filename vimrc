@@ -26,6 +26,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/Tagbar'
 Plugin 'udalov/kotlin-vim'
+Plugin 'lervag/vimtex'
 call vundle#end()
 
 filetype plugin indent on
@@ -271,9 +272,8 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 
 " Linebreak on 500 characters
 set lbr
