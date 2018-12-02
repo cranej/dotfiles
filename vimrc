@@ -2,21 +2,21 @@
 filetype off
 set rtp+=~/.vim/after,~/.vim/bundle/Vundle.vim
 call vundle#begin()
-Plugin 'Align'
-Plugin 'PProvost/vim-ps1'
-Plugin 'Shougo/vimproc'
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'Align'
+" Plugin 'PProvost/vim-ps1'
+" Plugin 'Shougo/vimproc'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'eagletmt/ghcmod-vim'
 Plugin 'elixir-lang/vim-elixir'
-Plugin 'fholgado/minibufexpl.vim'
+" Plugin 'fholgado/minibufexpl.vim'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'qpkorr/vim-renamer'
 Plugin 'scrooloose/nerdtree'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
@@ -25,8 +25,8 @@ Plugin 'unblevable/quick-scope'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/Tagbar'
-Plugin 'udalov/kotlin-vim'
-Plugin 'lervag/vimtex'
+" Plugin 'udalov/kotlin-vim'
+" Plugin 'lervag/vimtex'
 call vundle#end()
 
 filetype plugin indent on
