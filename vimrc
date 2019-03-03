@@ -25,6 +25,7 @@ Plugin 'unblevable/quick-scope'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-scripts/Tagbar'
+Plugin 'christoomey/vim-tmux-navigator'
 " Plugin 'udalov/kotlin-vim'
 " Plugin 'lervag/vimtex'
 call vundle#end()
