@@ -34,7 +34,9 @@
 (global-display-line-numbers-mode)
 ;; remove text in active region if inserting text
 (delete-selection-mode t)
-(tool-bar-mode nil)
+;; NOTE: has to be -1, 'nil' does not work here
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 ;; ido
 (setq ido-enable-flex-matching t)
 (ido-mode t)
