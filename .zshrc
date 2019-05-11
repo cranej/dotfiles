@@ -128,3 +128,4 @@ alias mplayl="mplayer -ass -subcp cp950 -sub-fuzziness 2 -really-quiet -playlist
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias dict=goldendict
+alias ec='emacsclient -n'

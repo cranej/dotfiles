@@ -1,6 +1,6 @@
 ;; global variables
 (setq
- exec-path (append exec-path '("/usr/local/bin" "~/.cargo/bin" "~/.local/bin"))
+ exec-path (append exec-path (list "/usr/local/bin" (expand-file-name "~/.cargo/bin") (expand-file-name "~/.local/bin")))
  redisplay-dont-pause t
  visible-bell nil
  inhibit-startup-screen t
@@ -14,13 +14,34 @@
  column-number-mode t
  scroll-error-top-bottom t
  auto-save-default nil
+ ;;erc
+ erc-hide-list '("JOIN" "PART" "QUIT")
+ erc-rename-buffers t
+ erc-kill-buffer-on-part t
+ erc-kill-queries-on-quit t
+ erc-kill-server-buffer-on-quit t
+ erc-interpret-mirc-color t
  use-package-always-ensure t
  sentence-end-double-space nil)
 
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":~/.cargo/bin" ":~/.local/bin"))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":" (expand-file-name "~/.cargo/bin") ":" (expand-file-name "~/.local/bin")))
 
 (define-key global-map (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
 (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; mac modifiers
+(when (equal system-type 'darwin)
+  (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta))
+;; c/c++
+(defun my-c++-mode-hook ()
+  (setq c-basic-offset 4
+        c-default-style "linux")
+  (c-set-offset 'innamespace 0)
+  (c-set-offset 'substatement-open 0))
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(global-superword-mode 1)
 ;; highlight current line / matching parentheses
 (global-hl-line-mode t)
 (show-paren-mode t)
@@ -74,13 +95,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (use-package))))
+ '(package-selected-packages
+   (quote
+    (with-editor which-key gnuplot projectile rg ggtags presentation magit haskell-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(use-package magit)
+
+(use-package presentation)
 
 (use-package markdown-mode
   :ensure t
@@ -90,6 +117,24 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "pandoc"))
 
+(use-package ggtags
+  :init
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode)
+                (ggtags-mode 1)))))
+
+(use-package rg
+  :init
+  (rg-enable-default-bindings))
+
+(use-package projectile
+  :bind
+  (("s-p" . 'projectile-command-map)
+   ("C-c p" . 'projectile-command-map)))
+(projectile-mode 1)
+
+(use-package gnuplot)
 (use-package expand-region
   :bind ("C-=" . 'er/expand-region))
 
@@ -97,12 +142,23 @@
   :config (global-undo-tree-mode)
   :bind ("C-x u" . 'undo-tree-undo))
 
+(use-package haskell-mode)
+
 (use-package org
   :init
   (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
+  (add-hook 'org-mode-hook 'org-indent-mode)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ditaa . t)
+     (dot . t)
+     (plantuml . t)
+     (gnuplot . t)
+     (emacs-lisp . t)))
   :config
-  (setq org-agenda-files (quote ("~/org-personal"
+  (setq org-confirm-babel-evaluate (lambda (lang body) (not (member lang '("ditaa" "dot" "plantuml" "gnuplot" "emacs-lisp"))))
+        org-agenda-files (quote ("~/org-personal"
                                  "~/org-home"))
         org-refile-targets (quote ((nil :maxlevel . 9)
                                    (org-agenda-files :maxlevel . 9)))
@@ -111,16 +167,37 @@
         org-refile-allow-creating-parent-nodes (quote confirm)
         org-completion-use-ido t
         org-indirect-buffer-display 'current-window
+        org-enforce-todo-dependencies t
+        org-enforce-todo-checkbox-dependencies t
         org-log-done 'time
+        org-agenda-span 'day
+        org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+                            (sequence "WAITING(w@/!)" "IDEA(i)" "|" "CANCELLED(c@/!)"))
+        org-agenda-custom-commands '(("b" "Waiting"
+                                      todo "WAITING"
+                                      ((org-agenda-overriding-header "Waiting")))
+                                     ("i" "Maybe Somedays"
+                                      todo "IDEA"
+                                      ((org-agenda-overriding-header "Waiting")))
+                                     (" " "Agenda and Next"
+                                      ((agenda "" ((org-agenda-skip-scheduled-if-done t)))
+                                       (todo "NEXT"
+                                             ((org-agenda-overriding-header "Waiting")
+                                              (org-agenda-todo-ignore-scheduled t))))))
+
         org-capture-templates (quote (("t" "todo" entry (file "~/org-personal/refile.org")
                                        "* TODO %?\n%U\n%a\n\n" :clock-in t :clock-resume t)
                                       ("n" "note" entry (file "~/org-personal/refile.org")
                                        "* %? :NOTE:\n%U\n%a\n\n" :clock-in t :clock-resume t))))
   (unbind-key "C-c [" org-mode-map)
-  (unbind-key "C-c ]" org-mode-map)  
+  (unbind-key "C-c ]" org-mode-map)
   :bind
   (("C-c c" . org-capture)
    ("C-c a" . org-agenda)))
+
+(use-package which-key
+  :diminish which-key-mode
+  :hook (after-init . which-key-mode))
 
 (defun copy-line (arg)
     "Copy lines (as many as prefix argument) in the kill ring.
@@ -143,4 +220,14 @@
     (beginning-of-line (or (and arg (1+ arg)) 2))
     (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
-(global-set-key "\C-c\C-k" 'copy-line)
+(global-set-key "\C-ck" 'copy-line)
+
+(define-skeleton init-post-skeleton
+  "Init a blog"
+   "Title:"
+   "---\n"
+   "layout: post\n"
+   "title:  \""str"\"\n"
+   "tags:\n"
+   "- "_"\n"
+   "---\n\n")
