@@ -21,6 +21,7 @@
  erc-kill-queries-on-quit t
  erc-kill-server-buffer-on-quit t
  erc-interpret-mirc-color t
+ vc-follow-symlinks t
  use-package-always-ensure t
  sentence-end-double-space nil)
 
@@ -144,8 +145,16 @@
 
 (use-package haskell-mode)
 
+
 (use-package org
   :init
+  (setq org-emphasis-regexp-components
+        ;; markup 记号前后允许中文
+        (list (concat " \t('\"{"            "[:nonascii:]")
+              (concat "- \t.,:!?;'\")}\\["  "[:nonascii:]")
+              " \t\r\n,\"'"
+              "."
+              1))
   (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
   (add-hook 'org-mode-hook 'org-indent-mode)
@@ -231,3 +240,14 @@
    "tags:\n"
    "- "_"\n"
    "---\n\n")
+
+(defun edit-init-file ()
+  "Edit the init file"
+  (interactive)
+  (find-file user-init-file))
+
+(defadvice ido-find-file (after find-file-sudo activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
