@@ -35,6 +35,12 @@
 (when (equal system-type 'darwin)
   (setq mac-option-modifier 'super)
   (setq mac-command-modifier 'meta))
+;;
+(defun hhkb-keyboard ()
+  "Active hhkb keyboard"
+  (interactive)
+  (setq x-meta-keysym 'super
+        x-super-keysym 'meta))
 ;; c/c++
 (defun my-c++-mode-hook ()
   (setq c-basic-offset 4
@@ -98,7 +104,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (with-editor which-key gnuplot projectile rg ggtags presentation magit haskell-mode use-package))))
+    (rust-mode with-editor which-key gnuplot projectile rg ggtags presentation magit haskell-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -107,6 +113,8 @@
  )
 
 (use-package magit)
+
+(use-package rust-mode)
 
 (use-package presentation)
 
@@ -144,7 +152,6 @@
   :bind ("C-x u" . 'undo-tree-undo))
 
 (use-package haskell-mode)
-
 
 (use-package org
   :init

@@ -129,3 +129,6 @@ alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias dict=goldendict
 alias ec='emacsclient -n'
+
+# export DOCKER_CONTENT_TRUST=1
+alias docker='sudo DOCKER_CONTENT_TRUST=1 docker'
