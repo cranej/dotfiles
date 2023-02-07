@@ -218,9 +218,9 @@ syntax enable
 
 set background=dark
 
-let g:solarized_termcolors=256
+" let g:solarized_termcolors=256
 
-colorscheme desert
+" colorscheme desert
 
 " Set extra options when running in GUI mode
 if has("gui_running")

@@ -13,7 +13,7 @@
     unstage = reset HEAD --
     last = !git --no-pager log -1 HEAD
 [user]
-    signingKey = 6EC2B0C2
+	signingkey = EB36AD80
     name = Crane Jin
     email = crane@cranejin.com
 [format]

@@ -23,7 +23,8 @@
  erc-interpret-mirc-color t
  vc-follow-symlinks t
  use-package-always-ensure t
- sentence-end-double-space nil)
+ sentence-end-double-space nil
+ )
 
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin" ":" (expand-file-name "~/.cargo/bin") ":" (expand-file-name "~/.local/bin")))
 
@@ -48,10 +49,12 @@
   (c-set-offset 'innamespace 0)
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
 (global-superword-mode 1)
 ;; highlight current line / matching parentheses
 (global-hl-line-mode t)
 (show-paren-mode t)
+
 ;; auto refresh buffers
 (global-auto-revert-mode t)
 ;; transparently open compressed files
@@ -65,10 +68,14 @@
 ;; NOTE: has to be -1, 'nil' does not work here
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+
 ;; ido
 (setq ido-enable-flex-matching t)
+(setq ido-default-buffer-method 'selected-window)
+(setq ido-everywhere t)
 (ido-mode t)
-;; emacs server
+
+ emacs server
 (require 'server)
 (unless (server-running-p)
   (server-start))
@@ -79,9 +86,8 @@
  tab-width 2
  c-basic-offset 2)
 
-(electric-indent-mode 0) ;;why?
-
-(global-unset-key (kbd "C-z")) ;;why?
+(electric-indent-mode 0)
+(global-unset-key (kbd "C-z"))
 
 ;; package manager
 (require 'package)
@@ -97,26 +103,14 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (rust-mode with-editor which-key gnuplot projectile rg ggtags presentation magit haskell-mode use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (use-package magit)
 
 (use-package rust-mode)
 
 (use-package presentation)
+
+(use-package dockerfile-mode)
 
 (use-package markdown-mode
   :ensure t
@@ -215,6 +209,17 @@
   :diminish which-key-mode
   :hook (after-init . which-key-mode))
 
+(use-package gnugo
+  :init
+  (setq
+   gnugo-xpms 'gnugo-imgen-create-xpms
+   gnugo-start-game-hook 'gnugo-image-display-mode))
+
+(use-package xclip
+  :hook (after-init . xclip-mode))
+
+(load-theme 'tango-dark)
+
 (defun copy-line (arg)
     "Copy lines (as many as prefix argument) in the kill ring.
       Ease of use features:
@@ -258,3 +263,16 @@
   (unless (and buffer-file-name
                (file-writable-p buffer-file-name))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(xclip which-key use-package undo-tree spacemacs-theme rust-mode rg projectile presentation markdown-mode magit haskell-mode gnuplot gnugo ggtags folding expand-region dockerfile-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
