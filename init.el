@@ -142,6 +142,7 @@
   :bind ("C-=" . 'er/expand-region))
 
 (use-package undo-tree
+  :init (setq undo-tree-auto-save-history nil)
   :config (global-undo-tree-mode)
   :bind ("C-x u" . 'undo-tree-undo))
 
