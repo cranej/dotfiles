@@ -68,7 +68,6 @@ alias gpg=gpg2
 alias cls=clear
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
-alias ec='emacsclient -n'
 alias e='emacsclient -nw'
 
 # export DOCKER_CONTENT_TRUST=1

@@ -75,7 +75,7 @@
 (setq ido-everywhere t)
 (ido-mode t)
 
- emacs server
+;;emacs server
 (require 'server)
 (unless (server-running-p)
   (server-start))
@@ -217,7 +217,7 @@
    gnugo-start-game-hook 'gnugo-image-display-mode))
 
 (use-package xclip
-  :hook (after-init . xclip-mode))
+  :config (xclip-mode 1))
 
 (load-theme 'tango-dark)
 

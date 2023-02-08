@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+if [ "$1" = "" ]; then
+    echo "What to mount? (books/home/NetBackup/video)"
+    exit
+fi
+
+TARGET="/mnt/nas/$1"
+mountpoint -q "$TARGET"
+if [[ $? -eq 0 ]]; then
+    echo "$TARGET has already been mounted, exit."
+    exit 1
+fi
+
+if [ ! -d "$TARGET" ]; then
+  mkdir -p "$TARGET"
+fi
+sudo PASSWD="$(pass nas/$NAS_USER)" mount -t cifs //ds02/$1 "$TARGET" -o username="$NAS_USER",uid=1000,gid=1001,domain=HOMENAS,iocharset=utf8,vers=3.0,mfsymlinks,nobrl
