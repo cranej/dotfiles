@@ -1,0 +1,32 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) pkill -RTMIN+11 dwmblocks ;;
+esac
+
+DB=/mnt/nas/home/data/tracking.db
+EXE=/home/crane/.local/bin/ticktock
+if [ ! -f "$DB" ] || [ ! -f "$EXE" ]
+then
+	echo "task: error"
+	exit 1
+fi
+
+ongoing=$($EXE --db="$DB" ongoing | head -1)
+total=$(ticktock report | tail -1 | sed -E 's/\s*\(Total\):\s*//')
+
+if grep -q "No ongoing" <<< "$ongoing"
+then
+	ongoing=""
+else
+	ongoing=" ongoing: $ongoing"
+fi
+
+if [ -z "$total" ]
+then
+	total=""
+else
+	total=" ${total}"
+fi
+
+echo "${total}${ongoing}"

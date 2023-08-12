@@ -1,0 +1,11 @@
+#!/bin/bash
+
+playlist=$(mpc lsplaylists | dmenu -p "Play: ")
+
+if [ -n "$playlist" ]
+then
+	mpc clear
+	mpc load "$playlist"
+	mpc play
+	notify-send -t 3000 "Playing: " "$playlist"
+fi

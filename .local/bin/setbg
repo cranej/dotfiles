@@ -1,0 +1,4 @@
+#!/bin/sh
+
+DISPLAY=:0 feh --bg-scale \
+ "$(find ~/wallpapers/ -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)"

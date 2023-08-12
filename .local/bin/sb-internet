@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	1) "$TERMINAL" -e nmtui; pkill -RTMIN+4 dwmblocks ;;
+	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ; then
+	wifiicon="$(awk '/^\s*w/ { print "wifi:", int($3 * 100 / 70) "% " }' /proc/net/wireless)"
+elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; then
+	grep -xq '0x1003' /sys/class/net/w*/flags && wifiicon="wifi: no " || wifiicon="wifi: disabled "
+fi
+
+printf "%s%s%s \n" "$wifiicon" "$(sed "s/down/eth: no/;s/up/eth: yes/" /sys/class/net/e*/operstate 2>/dev/null)" "$(sed "s/.*/vpn: on/" /sys/class/net/tun*/operstate 2>/dev/null)"

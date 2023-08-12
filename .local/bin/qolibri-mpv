@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# This script is used to play qolibri's audio and copy the file to clipboard.
+# set 'qolibri-mpv' in Qolibri: Settings > Options > External Program
+# You'll be able to play the audio in qolibri and paste it in an Anki note as an ogg/opus file.
+# When run from Qolibri, $1 is guaranteed to be the path to an audio file.
+
+readonly file_path=${1:?}
+readonly tmp_file_path=/tmp/qolibri-$RANDOM.mp3
+
+to_mp3() {
+	local -r in=${1:?} out=${2:?}
+	ffmpeg \
+		-y \
+		-vn \
+		-nostdin \
+		-loglevel info \
+		-i "$in" \
+		-map_metadata -1 \
+		"$out"
+}
+
+# Play the file
+mpv --keep-open=no --force-window=no "$1" &
+
+# Convert from wav to ogg/opus
+to_mp3 "$file_path" "$tmp_file_path"
+
+# Copy the URI to clipboard.
+echo "file://$tmp_file_path" | xclip -in -selection clipboard -target "text/uri-list"
+
+# Clean up after 60 seconds.
+sleep 60s
+rm -- "$tmp_file_path"
+wait

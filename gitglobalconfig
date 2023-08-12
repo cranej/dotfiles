@@ -20,3 +20,5 @@
     pretty = format:%C(yellow)%h %Cgreen%G? %<(10,ltrunc)%GK%n%aN <%ae>%n%aD%n%n  %s%n
 [push]
     default = simple
+[init]
+	defaultBranch = main

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+vol="$(pamixer --get-volume)"
+
+[ "$vol" != "${vol%\[MUTED\]}" ] && echo "muted" && exit
+
+vol="${vol#Volume: }"
+
+split() {
+	# For ommiting the . without calling and external program.
+	IFS=$2
+	set -- $1
+	printf '%s' "$@"
+}
+
+vol="$(printf "%.0f" "$(split "$vol" ".")")"
+
+case 1 in
+	$((vol >= 70)) ) icon="vol: " ;;
+	$((vol >= 30)) ) icon="vol: " ;;
+	$((vol >= 1)) ) icon="vol: " ;;
+	* ) echo "muted" && exit ;;
+esac
+
+echo "$icon$vol%"

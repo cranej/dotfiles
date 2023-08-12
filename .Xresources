@@ -45,7 +45,8 @@ Xft.lcdfilter:  lcddefault
 *.color7: #bfbaac
 *.color15: #fdf6e3
 
-URxvt.font: xft:DejaVu Sans Mono:size=12,xft:WenQuanYi Zen Hei Mono:antialias=true
+! URxvt.font: xft:DejaVu Sans Mono:size=12,xft:Noto Color Emoji:pixelsize=10:antialias=true:autohint=true,xft:WenQuanYi Zen Hei Mono:antialias=true
+URxvt.font: xft:DejaVu Sans Mono:size=12,xft:Noto Color Emoji:pixelsize=10:antialias=true:autohint=true,xft:WenQuanYi Zen Hei Mono:antialias=true
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.geometry: 92x24

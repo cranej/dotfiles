@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# The DOS label of your USB stick
+UUID=FB6A-B7E4
+
+# The pathname to the file containing your private keys
+# on that stick
+KEYFILE=crane-key.asc
+
+# Identify the device file corresponding to your USB stick
+device=$(/sbin/findfs UUID=$UUID)
+
+if [ -n "$device" ]; then
+    # Mount the stick
+    udisksctl mount --block-device $device
+
+    # Create temporary GnuPG home directory
+    tmpdir=$(mktemp -d -p $XDG_RUNTIME_DIR gpg.XXXXXX)
+
+    # Import the private keys
+    gpg2 --homedir $tmpdir --import /run/media/$USER/$UUID/$KEYFILE
+
+    # Unmount the stick
+    udisksctl unmount --block-device $device
+
+    # Launch GnuPG from the temporary directory,
+    # with the default public keyring
+    # and with any arguments given to us on the command line
+    gpg2 --homedir $tmpdir --no-default-keyring --keyring ${GNUPGHOME:-$HOME/.gnupg}/pubring.kbx $@
+
+    # Cleaning up
+    [ -f $tmpdir/S.gpg-agent ] && gpg-connect-agent --homedir $tmpdir KILLAGENT /bye
+    rm -rf $tmpdir
+fi

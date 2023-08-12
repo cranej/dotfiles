@@ -1,0 +1,24 @@
+#!/usr/bin/zsh
+
+if [[ "`whoami`" != "root" ]]; then
+    echo "Need to run as root, exit."
+    exit 1
+fi
+
+function backup() {
+    echo "Backing up to $1"
+    rsync --archive --acls --xattrs --hard-links --sparse --one-file-system --delete --delete-excluded --numeric-ids --progress --info=progress2 --exclude={"/var/cache/pacman/*","/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/home/crane/.cache/*","/lost+found"} / "$1"
+}
+
+FOLDER="arch1devcj-system"
+for dest in "/mnt/backup" "/mnt/backup2"
+do
+    mountpoint -q $dest
+    RETURN=$?
+    BACKUP_TO="$dest/$FOLDER"
+    if [[ $RETURN -eq 0 ]] && [[ -d "$BACKUP_TO" ]]; then
+        backup "$BACKUP_TO/"
+    else
+        echo "Not ready: $BACKUP_TO"
+    fi
+done

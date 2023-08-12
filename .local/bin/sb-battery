@@ -1,0 +1,27 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+	4) xbacklight -inc 10 ;;
+	5) xbacklight -dec 10 ;;
+	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+
+# Loop through all attached batteries and format the info
+for battery in /sys/class/power_supply/BAT?*; do
+	# If non-first battery, print a space separator.
+	[ -n "${capacity+x}" ] && printf " "
+	# Sets up the status and capacity
+	case "$(cat "$battery/status" 2>&1)" in
+		"Full") status="full: " ;;
+		"Discharging") status="discharging: " ;;
+		"Charging") status="charging: " ;;
+		"Not charging") status="no charging: " ;;
+		"Unknown") status="unkown: " ;;
+		*) exit 1 ;;
+	esac
+	capacity="$(cat "$battery/capacity" 2>&1)"
+	# Will make a warn variable if discharging and low
+	[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="LOW: "
+	# Prints the info
+	printf "bat %s%s%d%%" "$status" "$warn" "$capacity"; unset warn
+done && printf "\\n"

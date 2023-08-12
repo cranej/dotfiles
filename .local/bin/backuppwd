@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+rsync -rvz  .password-store dscranej@ds02:~/Important/

@@ -1,36 +1,10 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-#stack and haskell
-export HASKELL=$HOME/.stack/programs/x86_64-linux/ghc-7.10.3/bin
-export LOCAL_BIN=$HOME/.local/bin
-export PATH=$HASKELL:$LOCAL_BIN:$PATH
-export PATH="$HOME/.node/bin:$HOME/.cargo/bin:$PATH"
-export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"
-export MANPATH="$HOME/.node/share/man:$MANPATH"
-export SPARK_HOME="$HOME/spark-latest"
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="gnzh" # set by `omz`
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git stack)
+ZSH_THEME="gnzhc" # set by `omz`
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
-
-export EDITOR="emacsclient -nw"
-# Preferred editor for local and remote sessions
-#if [[ -n $SSH_CONNECTION ]]; then
-#  export EDITOR='vim'
-#else
-#  export EDITOR='vim'
-#fi
 
 #Gnupg
 unset SSH_AGENT_PID
@@ -61,6 +35,9 @@ function tpon(){
     synclient TouchpadOff=0
 }
 
+# st use primary
+export PASSWORD_STORE_X_SELECTION=primary
+
 # aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
@@ -69,12 +46,12 @@ alias cls=clear
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias e='emacsclient -nw'
+alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
+alias m='neomutt'
 
 # export DOCKER_CONTENT_TRUST=1
 alias docker='sudo DOCKER_CONTENT_TRUST=1 docker'
 source <($HOME/.local/bin/doctl completion zsh)
-export CLOCKING_FILE=/mnt/nas/home/data/tracking.db
-
 
 # Display usage statistics for commands running > 5 sec.
 REPORTTIME=5
